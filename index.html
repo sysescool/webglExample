@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>表格示例</title>
+    <title>WebGL Examples</title>
     <style>
         table {
             border-collapse: collapse;
@@ -28,450 +28,691 @@
         tr:hover {
             background-color: #f5f5f5;
         }
+        
+        /* 添加语言选择器样式 */
+        .language-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        select {
+            padding: 5px;
+            font-size: 16px;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
+<!-- 添加语言选择器 -->
+<div class="language-selector">
+    <select id="languageSelect" onchange="changeLanguage(this.value)">
+        <option value="zh">中文</option>
+        <option value="en">English</option>
+    </select>
+</div>
+
 <div>
-    <h1>WebGL 3D 示例</h1>
+    <h1 data-i18n="title">WebGL 3D 示例</h1>
     <p>
-        本书源码：<a href="https://sites.google.com/site/webglbook/home/downloads">https://sites.google.com/site/webglbook/home/downloads</a>
+        <span data-i18n="sourceCode">本书源码：</span>
+        <a href="https://sites.google.com/site/webglbook/home/downloads">https://sites.google.com/site/webglbook/home/downloads</a>
     </p>
     <p>
-        我只是制作了该索引页，并使用中文改进内容，你可以从这里获取源码：<a href="https://github.com/sysescool/webglExample.git">sysescool/webglExample.git</a>
+        <span data-i18n="indexInfo">我只是制作了该索引页，并使用中文改进内容，你可以从这里获取源码：</span>
+        <a href="https://github.com/sysescool/webglExample.git">sysescool/webglExample.git</a>
     </p>
 </div>
+
 <div>
     <table>
         <thead>
             <tr>
-                <th>link</th>
-                <th>description</th>
-                <th>overview</th>
+                <th data-i18n="link">link</th>
+                <th data-i18n="description">description</th>
+                <th data-i18n="overview">overview</th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td><a href="ch02/01-HelloCanvas.html">2.1-HelloCanvas.html</a></td>
-                <td>test canvas can be used and clear it</td>
-                <td>N/A</td>
+                <td data-i18n="ch0201"></td>
+                <td><img src="overview/02.01.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch02/02-HelloPoint1.html">2.2-HelloPoint1.html</a></td>
-                <td>draw a point by specify the position in shader</td>
-                <td>N/A</td>
+                <td data-i18n="ch0202"></td>
+                <td><img src="overview/02.02.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch02/03-HelloPoint2.html">2.3-HelloPoint2.html</a></td>
-                <td>draw a point by pass the position to shader</td>
-                <td>N/A</td>
+                <td data-i18n="ch0203"></td>
+                <td><img src="overview/02.03.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch02/04-ClickedPoints.html">2.4-ClickedPoints.html</a></td>
-                <td>draw click points with read color</td>
-                <td>N/A</td>
+                <td data-i18n="ch0204"></td>
+                <td><img src="overview/02.04.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch02/05-ColoredPoints.html">2.5-ColoredPoints.html</a></td>
-                <td>draw click points with different colors</td>
-                <td>N/A</td>
+                <td data-i18n="ch0205"></td>
+                <td><img src="overview/02.05.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch02/06-DrawRectangle.html">2.6-DrawRectangle.html</a></td>
-                <td>draw a blue rectangle</td>
-                <td>N/A</td>
+                <td data-i18n="ch0206"></td>
+                <td><img src="overview/02.06.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch03/01-MultiPoint.html">3.1-MultiPoint.html</a></td>
-                <td>绘制多个点</td>
-                <td>N/A</td>
+                <td data-i18n="ch0301"></td>
+                <td><img src="overview/03.01.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch03/02-HelloTriangle.html">3.2-HelloTriangle.html</a></td>
-                <td>基本三角形绘制</td>
-                <td>N/A</td>
+                <td data-i18n="ch0302"></td>
+                <td><img src="overview/03.02.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch03/03-HelloTriangle_LINES.html">3.3-HelloTriangle_LINES.html</a></td>
-                <td>绘制多个三角形</td>
-                <td>N/A</td>
+                <td data-i18n="ch0303"></td>
+                <td><img src="overview/03.03.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch03/04-HelloTriangle_LINE_STRIP.html">3.4-HelloTriangle_LINE_STRIP.html</a></td>
-                <td>绘制多个三角形</td>
-                <td>N/A</td>
+                <td data-i18n="ch0304"></td>
+                <td><img src="overview/03.04.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch03/05-HelloTriangle_LINE_LOOP.html">3.5-HelloTriangle_LINE_LOOP.html</a></td>
-                <td>绘制多个三角形</td>
-                <td>N/A</td>
+                <td data-i18n="ch0305"></td>
+                <td><img src="overview/03.05.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch03/06-HelloQuad.html">3.6-HelloQuad.html</a></td>
-                <td>绘制多个三角形</td>
-                <td>N/A</td>
+                <td data-i18n="ch0306"></td>
+                <td><img src="overview/03.06.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch03/07-HelloQuad_FAN.html">3.7-HelloQuad_FAN.html</a></td>
-                <td>绘制多个三角形</td>
-                <td>N/A</td>
+                <td data-i18n="ch0307"></td>
+                <td><img src="overview/03.07.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch03/08-TranslatedTriangle.html">3.8-TranslatedTriangle.html</a></td>
-                <td>平移变换三角形</td>
-                <td>N/A</td>
+                <td data-i18n="ch0308"></td>
+                <td><img src="overview/03.08.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch04/01-RotatedTriangle_Matrix4.html">4.1-RotatedTriangle_Matrix4.html</a></td>
-                <td>矩阵旋转三角形</td>
-                <td>N/A</td>
+                <td data-i18n="ch0401"></td>
+                <td><img src="overview/04.01.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch04/02-RotatedTranslatedTriangle.html">4.2-RotatedTranslatedTriangle.html</a></td>
-                <td>矩阵旋转三角形</td>
-                <td>N/A</td>
+                <td data-i18n="ch0402"></td>
+                <td><img src="overview/04.02.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch04/03-RotatingTriangle.html">4.3-RotatingTriangle.html</a></td>
-                <td>矩阵旋转三角形</td>
-                <td>N/A</td>
+                <td data-i18n="ch0403"></td>
+                <td><img src="overview/04.03.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch04/04-RotatingTranslatedTriangle.html">4.4-RotatingTranslatedTriangle.html</a></td>
-                <td>矩阵旋转三角形</td>
-                <td>N/A</td>
+                <td data-i18n="ch0404"></td>
+                <td><img src="overview/04.04.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch04/05-RotatingTriangle_withButtons.html">4.5-RotatingTriangle_withButtons.html</a></td>
-                <td>带控制按钮的旋转三角形</td>
-                <td>N/A</td>
+                <td data-i18n="ch0405"></td>
+                <td><img src="overview/04.05.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch04/06-TranslatedRotatedTriangle.html">4.6-TranslatedRotatedTriangle.html</a></td>
-                <td>带控制按钮的旋转三角形</td>
-                <td>N/A</td>
+                <td data-i18n="ch0406"></td>
+                <td><img src="overview/04.06.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch05/01-MultiAttributeSize.html">5.1-MultiAttributeSize.html</a></td>
-                <td>使用多个属性控制顶点大小</td>
-                <td>N/A</td>
+                <td data-i18n="ch0501"></td>
+                <td><img src="overview/05.01.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch05/02-MultiAttributeSize_Interleaved.html">5.2-MultiAttributeSize_Interleaved.html</a></td>
-                <td>交错存储的顶点属性（位置+大小）</td>
-                <td>N/A</td>
+                <td data-i18n="ch0502"></td>
+                <td><img src="overview/05.02.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch05/03-MultiAttributeColor.html">5.3-MultiAttributeColor.html</a></td>
-                <td>多属性颜色插值（顶点着色器传色）</td>
-                <td>N/A</td>
+                <td data-i18n="ch0503"></td>
+                <td><img src="overview/05.03.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch05/04-ColoredTriangle.html">5.4-ColoredTriangle.html</a></td>
-                <td>彩色三角形绘制（顶点颜色插值）</td>
-                <td>N/A</td>
+                <td data-i18n="ch0504"></td>
+                <td><img src="overview/05.04.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch05/05-HelloTriangle_FragCoord.html">5.5-HelloTriangle_FragCoord.html</a></td>
-                <td>使用片元坐标(FragCoord)着色</td>
-                <td>N/A</td>
+                <td data-i18n="ch0505"></td>
+                <td><img src="overview/05.05.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch05/06-TexturedQuad.html">5.6-TexturedQuad.html</a></td>
-                <td>基础纹理贴图四边形</td>
-                <td>N/A</td>
+                <td data-i18n="ch0506"></td>
+                <td><img src="overview/05.06.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch05/07-TexturedQuad_Repeat.html">5.7-TexturedQuad_Repeat.html</a></td>
-                <td>纹理重复模式示例</td>
-                <td>N/A</td>
+                <td data-i18n="ch0507"></td>
+                <td><img src="overview/05.07.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch05/08-TexturedQuad_Clamp_Mirror.html">5.8-TexturedQuad_Clamp_Mirror.html</a></td>
-                <td>纹理边缘处理对比（Clamp/Mirror）</td>
-                <td>N/A</td>
+                <td data-i18n="ch0508"></td>
+                <td><img src="overview/05.08.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch05/09-MultiTexture.html">5.9-MultiTexture.html</a></td>
-                <td>多纹理混合示例</td>
-                <td>N/A</td>
+                <td data-i18n="ch0509"></td>
+                <td><img src="overview/05.09.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/01-LookAtTriangles.html">7.1-LookAtTriangles.html</a></td>
-                <td>视图矩阵基础应用</td>
-                <td>N/A</td>
+                <td data-i18n="ch0701"></td>
+                <td><img src="overview/07.01.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/02-LookAtRotatedTriangles.html">7.2-LookAtRotatedTriangles.html</a></td>
-                <td>旋转视图下的三角形</td>
-                <td>N/A</td>
+                <td data-i18n="ch0702"></td>
+                <td><img src="overview/07.02.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/03-LookAtRotatedTriangles_mvMatrix.html">7.3-LookAtRotatedTriangles_mvMatrix.html</a></td>
-                <td>模型视图矩阵分离</td>
-                <td>N/A</td>
+                <td data-i18n="ch0703"></td>
+                <td><img src="overview/07.03.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/04-LookAtTrianglesWithKeys.html">7.4-LookAtTrianglesWithKeys.html</a></td>
-                <td>键盘控制视图方向</td>
-                <td>N/A</td>
+                <td data-i18n="ch0704"></td>
+                <td><img src="overview/07.04.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/05-OrthoView.html">7.5-OrthoView.html</a></td>
-                <td>正交投影基础</td>
-                <td>N/A</td>
+                <td data-i18n="ch0705"></td>
+                <td><img src="overview/07.05.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/06-LookAtTrianglesWithKeys_ViewVolume.html">7.6-LookAtTrianglesWithKeys_ViewVolume.html</a></td>
-                <td>可视空间交互演示</td>
-                <td>N/A</td>
+                <td data-i18n="ch0706"></td>
+                <td><img src="overview/07.06.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/07-OrthoView_halfSize.html">7.7-OrthoView_halfSize.html</a></td>
-                <td>半尺寸正交投影</td>
-                <td>N/A</td>
+                <td data-i18n="ch0707"></td>
+                <td><img src="overview/07.07.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/08-OrthoView_halfWidth.html">7.8-OrthoView_halfWidth.html</a></td>
-                <td>非对称正交投影</td>
-                <td>N/A</td>
+                <td data-i18n="ch0708"></td>
+                <td><img src="overview/07.08.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/09-PerspectiveView.html">7.9-PerspectiveView.html</a></td>
-                <td>透视投影基础</td>
-                <td>N/A</td>
+                <td data-i18n="ch0709"></td>
+                <td><img src="overview/07.09.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/10-PerspectiveView_mvp.html">7.10-PerspectiveView_mvp.html</a></td>
-                <td>MVP矩阵完整流程</td>
-                <td>N/A</td>
+                <td data-i18n="ch0710"></td>
+                <td><img src="overview/07.10.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/11-PerspectiveView_mvpMatrix.html">7.11-PerspectiveView_mvpMatrix.html</a></td>
-                <td>矩阵预计算优化</td>
-                <td>N/A</td>
+                <td data-i18n="ch0711"></td>
+                <td><img src="overview/07.11.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/12-DepthBuffer.html">7.12-DepthBuffer.html</a></td>
-                <td>深度缓冲机制</td>
-                <td>N/A</td>
+                <td data-i18n="ch0712"></td>
+                <td><img src="overview/07.12.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/13-Zfighting.html">7.13-Zfighting.html</a></td>
-                <td>深度冲突演示</td>
-                <td>N/A</td>
+                <td data-i18n="ch0713"></td>
+                <td><img src="overview/07.13.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/14-HelloCube.html">7.14-HelloCube.html</a></td>
-                <td>立方体基础绘制</td>
-                <td>N/A</td>
+                <td data-i18n="ch0714"></td>
+                <td><img src="overview/07.14.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/15-ColoredCube.html">7.15-ColoredCube.html</a></td>
-                <td>彩色立方体</td>
-                <td>N/A</td>
+                <td data-i18n="ch0715"></td>
+                <td><img src="overview/07.15.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/16-ColoredCube_singleColor.html">7.16-ColoredCube_singleColor.html</a></td>
-                <td>单色立方体绘制</td>
-                <td>N/A</td>
+                <td data-i18n="ch0716"></td>
+                <td><img src="overview/07.16.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/17-HelloCube_singleColor.html">7.17-HelloCube_singleColor.html</a></td>
-                <td>基础单色立方体</td>
-                <td>N/A</td>
+                <td data-i18n="ch0717"></td>
+                <td><img src="overview/07.17.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch08/01-LightedCube.html">8.1-LightedCube.html</a></td>
-                <td>基础光照立方体（漫反射+环境光）</td>
-                <td>N/A</td>
+                <td data-i18n="ch0801"></td>
+                <td><img src="overview/08.01.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch08/02-LightedCube_animation.html">8.2-LightedCube_animation.html</a></td>
-                <td>动态光源位置变化</td>
-                <td>N/A</td>
+                <td data-i18n="ch0802"></td>
+                <td><img src="overview/08.02.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch08/03-LightedCube_ambient.html">8.3-LightedCube_ambient.html</a></td>
-                <td>纯环境光效果演示</td>
-                <td>N/A</td>
+                <td data-i18n="ch0803"></td>
+                <td><img src="overview/08.03.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch08/04-LightedTranslatedRotatedCube.html">8.4-LightedTranslatedRotatedCube.html</a></td>
-                <td>变换后的光照立方体</td>
-                <td>N/A</td>
+                <td data-i18n="ch0804"></td>
+                <td><img src="overview/08.04.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch08/05-PointLightedCube.html">8.5-PointLightedCube.html</a></td>
-                <td>点光源照射立方体</td>
-                <td>N/A</td>
+                <td data-i18n="ch0805"></td>
+                <td><img src="overview/08.05.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch08/06-PointLightedCube_animation.html">8.6-PointLightedCube_animation.html</a></td>
-                <td>动态点光源运动</td>
-                <td>N/A</td>
+                <td data-i18n="ch0806"></td>
+                <td><img src="overview/08.06.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch08/07-PointLightedSphere.html">8.7-PointLightedSphere.html</a></td>
-                <td>点光源照射球体</td>
-                <td>N/A</td>
+                <td data-i18n="ch0807"></td>
+                <td><img src="overview/08.07.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch08/08-PointLightedSphere_perFragment.html">8.8-PointLightedSphere_perFragment.html</a></td>
-                <td>逐片元点光源着色</td>
-                <td>N/A</td>
+                <td data-i18n="ch0808"></td>
+                <td><img src="overview/08.08.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch08/09-PointLightedCube_perFragment.html">8.9-PointLightedCube_perFragment.html</a></td>
-                <td>立方体逐片元光照</td>
-                <td>N/A</td>
+                <td data-i18n="ch0809"></td>
+                <td><img src="overview/08.09.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch08/10-LightedCube_perFragment.html">8.10-LightedCube_perFragment.html</a></td>
-                <td>完整逐片元Phong光照</td>
-                <td>N/A</td>
+                <td data-i18n="ch0810"></td>
+                <td><img src="overview/08.10.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch09/01-JointModel.html">9.1-JointModel.html</a></td>
-                <td>关节模型</td>
-                <td>N/A</td>
+                <td data-i18n="ch0901"></td>
+                <td><img src="overview/09.01.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch09/02-MultiJointModel.html">9.2-MultiJointModel.html</a></td>
-                <td>关节模型</td>
-                <td>N/A</td>
+                <td data-i18n="ch0902"></td>
+                <td><img src="overview/09.02.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch09/03-MultiJointModel_segment.html">9.3-MultiJointModel_segment.html</a></td>
-                <td>关节模型</td>
-                <td>N/A</td>
+                <td data-i18n="ch0903"></td>
+                <td><img src="overview/09.03.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/01-RotateObject.html">10.1-RotateObject.html</a></td>
-                <td>物体空间旋转控制</td>
-                <td>N/A</td>
+                <td data-i18n="ch1001"></td>
+                <td><img src="overview/10.01.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/02-PickObject.html">10.2-PickObject.html</a></td>
-                <td>对象拾取基础实现</td>
-                <td>N/A</td>
+                <td data-i18n="ch1002"></td>
+                <td><img src="overview/10.02.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/03-PickFace.html">10.3-PickFace.html</a></td>
-                <td>面级别精确拾取</td>
-                <td>N/A</td>
+                <td data-i18n="ch1003"></td>
+                <td><img src="overview/10.03.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/04-HUD.html">10.4-HUD.html</a></td>
-                <td>平视显示器叠加</td>
-                <td>N/A</td>
+                <td data-i18n="ch1004"></td>
+                <td><img src="overview/10.04.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/05-3DoverWeb.html">10.5-3DoverWeb.html</a></td>
-                <td>网页叠加3D内容</td>
-                <td>N/A</td>
+                <td data-i18n="ch1005"></td>
+                <td><img src="overview/10.05.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/06-Fog.html">10.6-Fog.html</a></td>
-                <td>线性雾效实现</td>
-                <td>N/A</td>
+                <td data-i18n="ch1006"></td>
+                <td><img src="overview/10.06.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/07-Fog_w.html">10.7-Fog_w.html</a></td>
-                <td>基于w值的雾效</td>
-                <td>N/A</td>
+                <td data-i18n="ch1007"></td>
+                <td><img src="overview/10.07.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/08-RoundedPoints.html">10.8-RoundedPoints.html</a></td>
-                <td>圆形点精灵渲染</td>
-                <td>N/A</td>
+                <td data-i18n="ch1008"></td>
+                <td><img src="overview/10.08.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/09-LookAtBlendedTriangles.html">10.9-LookAtBlendedTriangles.html</a></td>
-                <td>透明混合三角形</td>
-                <td>N/A</td>
+                <td data-i18n="ch1009"></td>
+                <td><img src="overview/10.09.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/10-BlendedCube.html">10.10-BlendedCube.html</a></td>
-                <td>透明混合立方体</td>
-                <td>N/A</td>
+                <td data-i18n="ch1010"></td>
+                <td><img src="overview/10.10.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/11-ProgramObject.html">10.11-ProgramObject.html</a></td>
-                <td>可切换着色程序</td>
-                <td>N/A</td>
+                <td data-i18n="ch1011"></td>
+                <td><img src="overview/10.11.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/12-FramebufferObject.html">10.12-FramebufferObject.html</a></td>
-                <td>离屏渲染缓冲区</td>
-                <td>N/A</td>
+                <td data-i18n="ch1012"></td>
+                <td><img src="overview/10.12.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/13-Shadow.html">10.13-Shadow.html</a></td>
-                <td>阴影映射基础</td>
-                <td>N/A</td>
+                <td data-i18n="ch1013"></td>
+                <td><img src="overview/10.13.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/14-Shadow_highp.html">10.14-Shadow_highp.html</a></td>
-                <td>高精度阴影优化</td>
-                <td>N/A</td>
+                <td data-i18n="ch1014"></td>
+                <td><img src="overview/10.14.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/15-OBJViewer.html">10.15-OBJViewer.html</a></td>
-                <td>OBJ模型查看器</td>
-                <td>N/A</td>
+                <td data-i18n="ch1015"></td>
+                <td><img src="overview/10.15.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/16-RotatingTriangle_contextLost.html">10.16-RotatingTriangle_contextLost.html</a></td>
-                <td>上下文丢失恢复</td>
-                <td>N/A</td>
+                <td data-i18n="ch1016"></td>
+                <td><img src="overview/10.16.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/17-Picking.html">10.17-Picking.html</a></td>
-                <td>高级拾取系统</td>
-                <td>N/A</td>
+                <td data-i18n="ch1017"></td>
+                <td><img src="overview/10.17.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/18-Shadow_highp_sphere.html">10.18-Shadow_highp_sphere.html</a></td>
-                <td>球体高精度阴影</td>
-                <td>N/A</td>
+                <td data-i18n="ch1018"></td>
+                <td><img src="overview/10.18.png" /></td>
             </tr>
             <tr>
                 <td><a href="gifts/01-Particle.html">G.1-Particle.html</a></td>
-                <td>粒子系统基础</td>
-                <td>点精灵+圆形片元着色</td>
+                <td data-i18n="g01"></td>
+                <td><img src="overview/g01.png" /></td>
             </tr>
             <tr>
                 <td><a href="gifts/02-Printf.html">G.2-Printf.html</a></td>
-                <td>着色器调试技巧</td>
-                <td>颜色编码输出法</td>
+                <td data-i18n="g02"></td>
+                <td><img src="overview/g02.png" /></td>
             </tr>
             <tr>
                 <td><a href="gifts/03-TextTexture.html">G.3-TextTexture.html</a></td>
-                <td>动态文本纹理生成</td>
-                <td>Canvas+纹理映射</td>
+                <td data-i18n="g03"></td>
+                <td><img src="overview/g03.png" /></td>
             </tr>
             <tr>
                 <td><a href="gifts/04-SpecularCube.html">G.4-SpecularCube.html</a></td>
-                <td>高光反射增强版</td>
-                <td>Blinn-Phong优化</td>
+                <td data-i18n="g04"></td>
+                <td><img src="overview/g04.png" /></td>
             </tr>
             <tr>
                 <td><a href="gifts/05-Wave.html">G.5-Wave.html</a></td>
-                <td>正弦波顶点动画</td>
-                <td>时间驱动形变</td>
+                <td data-i18n="g05"></td>
+                <td><img src="overview/g05.png" /></td>
             </tr>
             <tr>
                 <td><a href="gifts/06-WorldCoordinate.html">G.6-WorldCoordinate.html</a></td>
-                <td>世界坐标可视化</td>
-                <td>坐标系统转换</td>
+                <td data-i18n="g06"></td>
+                <td><img src="overview/g06.png" /></td>
             </tr>
             <tr>
                 <td><a href="gifts/07-ThreeDUI.html">G.7-ThreeDUI.html</a></td>
-                <td>3D交互界面元素</td>
-                <td>空间事件映射</td>
+                <td data-i18n="g07"></td>
+                <td><img src="overview/g07.png" /></td>
             </tr>
         </tbody>
     </table>
 </div>
+
+<script>
+// 语言配置
+const i18n = {
+    zh: {
+        title: 'WebGL 示例',
+        sourceCode: '本书源码：',
+        indexInfo: '我只是制作了该索引页，并使用中文改进内容，你可以从这里获取源码：',
+        link: '链接',
+        description: '描述',
+        overview: '预览',
+        ch0201: '获取canvas元素，并使用设置的清除色清除canvas',
+        ch0202: '在着色器中指定位置来绘制点',
+        ch0203: '通过attribute变量传递位置到着色器来绘制点',
+        ch0204: '绘制点击的点为红色',
+        ch0205: '绘制点击的点为不同颜色，通过传递uniform变量来设置颜色',
+        ch0206: '绘制一个蓝色矩形，通过fillStyle和fillRect来绘制',
+        ch0301: '',
+        ch0302: '',
+        ch0303: '',
+        ch0304: '',
+        ch0305: '',
+        ch0306: '',
+        ch0307: '',
+        ch0308: '',
+        ch0309: '',
+        ch0310: '',
+        ch0311: '',
+        ch0401: '',
+        ch0402: '',
+        ch0403: '',
+        ch0404: '',
+        ch0405: '',
+        ch0406: '',
+        ch0501: '',
+        ch0502: '',
+        ch0503: '',
+        ch0504: '',
+        ch0505: '',
+        ch0506: '',
+        ch0507: '',
+        ch0508: '',
+        ch0509: '',
+        ch0701: '',
+        ch0702: '',
+        ch0703: '',
+        ch0704: '',
+        ch0705: '',
+        ch0706: '',
+        ch0707: '',
+        ch0708: '',
+        ch0709: '',
+        ch0710: '',
+        ch0711: '',
+        ch0712: '',
+        ch0713: '',
+        ch0714: '',
+        ch0715: '',
+        ch0716: '',
+        ch0717: '',
+        ch0801: '',
+        ch0802: '',
+        ch0803: '',
+        ch0804: '',
+        ch0805: '',
+        ch0806: '',
+        ch0807: '',
+        ch0808: '',
+        ch0809: '',
+        ch0810: '',
+        ch0901: '',
+        ch0902: '',
+        ch0903: '',
+        ch1001: '',
+        ch1002: '',
+        ch1003: '',
+        ch1004: '',
+        ch1005: '',
+        ch1006: '',
+        ch1007: '',
+        ch1008: '',
+        ch1009: '',
+        ch1010: '',
+        ch1011: '',
+        ch1012: '',
+        ch1013: '',
+        ch1014: '',
+        ch1015: '',
+        ch1016: '',
+        ch1017: '',
+        ch1018: '',
+        g01: '',
+        g02: '',
+        g03: '',
+        g04: '',
+        g05: '',
+        g06: '',
+        g07: '',
+    },
+    en: {
+        title: 'WebGL Examples',
+        sourceCode: 'Source code:',
+        indexInfo: 'I just created this index page and improved the content in Chinese, you can get the source code from:',
+        link: 'Link',
+        description: 'Description',
+        overview: 'Overview',
+        ch0201: 'test canvas can be used and clear it with the specified color',
+        ch0202: 'draw a point by specifying the position in shader',
+        ch0203: 'draw a point by pass the position to the shader by using the attribute variable',
+        ch0204: 'draw click points with read color',
+        ch0205: 'draw click points with different colors, by passing the uniform variable to the shader',
+        ch0206: 'draw a blue rectangle',
+        ch0301: '',
+        ch0302: '',
+        ch0303: '',
+        ch0304: '',
+        ch0305: '',
+        ch0306: '',
+        ch0307: '',
+        ch0308: '',
+        ch0309: '',
+        ch0310: '',
+        ch0311: '',
+        ch0401: '',
+        ch0402: '',
+        ch0403: '',
+        ch0404: '',
+        ch0405: '',
+        ch0406: '',
+        ch0501: '',
+        ch0502: '',
+        ch0503: '',
+        ch0504: '',
+        ch0505: '',
+        ch0506: '',
+        ch0507: '',
+        ch0508: '',
+        ch0509: '',
+        ch0701: '',
+        ch0702: '',
+        ch0703: '',
+        ch0704: '',
+        ch0705: '',
+        ch0706: '',
+        ch0707: '',
+        ch0708: '',
+        ch0709: '',
+        ch0710: '',
+        ch0711: '',
+        ch0712: '',
+        ch0713: '',
+        ch0714: '',
+        ch0715: '',
+        ch0716: '',
+        ch0717: '',
+        ch0801: '',
+        ch0802: '',
+        ch0803: '',
+        ch0804: '',
+        ch0805: '',
+        ch0806: '',
+        ch0807: '',
+        ch0808: '',
+        ch0809: '',
+        ch0810: '',
+        ch0901: '',
+        ch0902: '',
+        ch0903: '',
+        ch1001: '',
+        ch1002: '',
+        ch1003: '',
+        ch1004: '',
+        ch1005: '',
+        ch1006: '',
+        ch1007: '',
+        ch1008: '',
+        ch1009: '',
+        ch1010: '',
+        ch1011: '',
+        ch1012: '',
+        ch1013: '',
+        ch1014: '',
+        ch1015: '',
+        ch1016: '',
+        ch1017: '',
+        ch1018: '',
+        g01: '',
+        g02: '',
+        g03: '',
+        g04: '',
+        g05: '',
+        g06: '',
+        g07: '',
+    }
+};
+
+// 切换语言函数
+function changeLanguage(lang) {
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        if (i18n[lang][key]) {
+            element.textContent = i18n[lang][key];
+        }
+    });
+}
+
+// 初始化语言
+document.addEventListener('DOMContentLoaded', () => {
+    const userLang = navigator.language || navigator.userLanguage;
+    const initialLang = userLang.startsWith('zh') ? 'zh' : 'en';
+    document.getElementById('languageSelect').value = initialLang;
+    changeLanguage(initialLang);
+});
+</script>
+
 </body>
 </html>

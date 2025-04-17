@@ -10,47 +10,73 @@
             width: 80%;
             margin: 20px auto;
         }
-        
+
         th, td {
             border: 1px solid #ddd;
             padding: 3px;
             text-align: left;
         }
-        
+
         th {
             background-color: #f2f2f2;
         }
-        
+
         tr:nth-child(even) {
             background-color: #f9f9f9;
         }
-        
+
         tr:hover {
             background-color: #f5f5f5;
         }
-        
+
+        /* 添加图片尺寸样式 */
+        table img {
+            width: 48px;
+            height: 48px;
+        }
+
         /* 添加语言选择器样式 */
         .language-selector {
             position: fixed;
             top: 20px;
             right: 20px;
             z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 10px;
+            border-radius: 4px;
         }
-        
+
         select {
             padding: 5px;
             font-size: 16px;
             border-radius: 4px;
         }
+
+        .image-toggle {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .image-toggle input[type="checkbox"] {
+            margin: 0;
+        }
     </style>
 </head>
 <body>
-<!-- 添加语言选择器 -->
+<!-- 修改语言选择器部分 -->
 <div class="language-selector">
     <select id="languageSelect" onchange="changeLanguage(this.value)">
         <option value="zh">中文</option>
         <option value="en">English</option>
     </select>
+    <div class="image-toggle">
+        <input type="checkbox" id="toggleImages" onchange="toggleImages()">
+        <label for="toggleImages" data-i18n="showImages">显示预览图</label>
+    </div>
 </div>
 
 <div>
@@ -71,429 +97,429 @@
             <tr>
                 <th data-i18n="link">link</th>
                 <th data-i18n="description">description</th>
-                <th data-i18n="overview">overview</th>
+                <th data-i18n="preview">preview</th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td><a href="ch02/01-HelloCanvas.html">2.1-HelloCanvas.html</a></td>
                 <td data-i18n="ch0201"></td>
-                <td><img src="overview/02.01.png" /></td>
+                <td><img data-src="preview/02.01.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch02/02-HelloPoint1.html">2.2-HelloPoint1.html</a></td>
                 <td data-i18n="ch0202"></td>
-                <td><img src="overview/02.02.png" /></td>
+                <td><img data-src="preview/02.02.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch02/03-HelloPoint2.html">2.3-HelloPoint2.html</a></td>
                 <td data-i18n="ch0203"></td>
-                <td><img src="overview/02.03.png" /></td>
+                <td><img data-src="preview/02.03.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch02/04-ClickedPoints.html">2.4-ClickedPoints.html</a></td>
                 <td data-i18n="ch0204"></td>
-                <td><img src="overview/02.04.png" /></td>
+                <td><img data-src="preview/02.04.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch02/05-ColoredPoints.html">2.5-ColoredPoints.html</a></td>
                 <td data-i18n="ch0205"></td>
-                <td><img src="overview/02.05.png" /></td>
+                <td><img data-src="preview/02.05.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch02/06-DrawRectangle.html">2.6-DrawRectangle.html</a></td>
                 <td data-i18n="ch0206"></td>
-                <td><img src="overview/02.06.png" /></td>
+                <td><img data-src="preview/02.06.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch03/01-MultiPoint.html">3.1-MultiPoint.html</a></td>
                 <td data-i18n="ch0301"></td>
-                <td><img src="overview/03.01.png" /></td>
+                <td><img data-src="preview/03.01.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch03/02-HelloTriangle.html">3.2-HelloTriangle.html</a></td>
                 <td data-i18n="ch0302"></td>
-                <td><img src="overview/03.02.png" /></td>
+                <td><img data-src="preview/03.02.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch03/03-HelloTriangle_LINES.html">3.3-HelloTriangle_LINES.html</a></td>
                 <td data-i18n="ch0303"></td>
-                <td><img src="overview/03.03.png" /></td>
+                <td><img data-src="preview/03.03.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch03/04-HelloTriangle_LINE_STRIP.html">3.4-HelloTriangle_LINE_STRIP.html</a></td>
                 <td data-i18n="ch0304"></td>
-                <td><img src="overview/03.04.png" /></td>
+                <td><img data-src="preview/03.04.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch03/05-HelloTriangle_LINE_LOOP.html">3.5-HelloTriangle_LINE_LOOP.html</a></td>
                 <td data-i18n="ch0305"></td>
-                <td><img src="overview/03.05.png" /></td>
+                <td><img data-src="preview/03.05.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch03/06-HelloQuad.html">3.6-HelloQuad.html</a></td>
                 <td data-i18n="ch0306"></td>
-                <td><img src="overview/03.06.png" /></td>
+                <td><img data-src="preview/03.06.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch03/07-HelloQuad_FAN.html">3.7-HelloQuad_FAN.html</a></td>
                 <td data-i18n="ch0307"></td>
-                <td><img src="overview/03.07.png" /></td>
+                <td><img data-src="preview/03.07.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch03/08-TranslatedTriangle.html">3.8-TranslatedTriangle.html</a></td>
                 <td data-i18n="ch0308"></td>
-                <td><img src="overview/03.08.png" /></td>
+                <td><img data-src="preview/03.08.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch04/01-RotatedTriangle_Matrix4.html">4.1-RotatedTriangle_Matrix4.html</a></td>
                 <td data-i18n="ch0401"></td>
-                <td><img src="overview/04.01.png" /></td>
+                <td><img data-src="preview/04.01.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch04/02-RotatedTranslatedTriangle.html">4.2-RotatedTranslatedTriangle.html</a></td>
                 <td data-i18n="ch0402"></td>
-                <td><img src="overview/04.02.png" /></td>
+                <td><img data-src="preview/04.02.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch04/03-RotatingTriangle.html">4.3-RotatingTriangle.html</a></td>
                 <td data-i18n="ch0403"></td>
-                <td><img src="overview/04.03.png" /></td>
+                <td><img data-src="preview/04.03.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch04/04-RotatingTranslatedTriangle.html">4.4-RotatingTranslatedTriangle.html</a></td>
                 <td data-i18n="ch0404"></td>
-                <td><img src="overview/04.04.png" /></td>
+                <td><img data-src="preview/04.04.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch04/05-RotatingTriangle_withButtons.html">4.5-RotatingTriangle_withButtons.html</a></td>
                 <td data-i18n="ch0405"></td>
-                <td><img src="overview/04.05.png" /></td>
+                <td><img data-src="preview/04.05.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch04/06-TranslatedRotatedTriangle.html">4.6-TranslatedRotatedTriangle.html</a></td>
                 <td data-i18n="ch0406"></td>
-                <td><img src="overview/04.06.png" /></td>
+                <td><img data-src="preview/04.06.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch05/01-MultiAttributeSize.html">5.1-MultiAttributeSize.html</a></td>
                 <td data-i18n="ch0501"></td>
-                <td><img src="overview/05.01.png" /></td>
+                <td><img data-src="preview/05.01.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch05/02-MultiAttributeSize_Interleaved.html">5.2-MultiAttributeSize_Interleaved.html</a></td>
                 <td data-i18n="ch0502"></td>
-                <td><img src="overview/05.02.png" /></td>
+                <td><img data-src="preview/05.02.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch05/03-MultiAttributeColor.html">5.3-MultiAttributeColor.html</a></td>
                 <td data-i18n="ch0503"></td>
-                <td><img src="overview/05.03.png" /></td>
+                <td><img data-src="preview/05.03.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch05/04-ColoredTriangle.html">5.4-ColoredTriangle.html</a></td>
                 <td data-i18n="ch0504"></td>
-                <td><img src="overview/05.04.png" /></td>
+                <td><img data-src="preview/05.04.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch05/05-HelloTriangle_FragCoord.html">5.5-HelloTriangle_FragCoord.html</a></td>
                 <td data-i18n="ch0505"></td>
-                <td><img src="overview/05.05.png" /></td>
+                <td><img data-src="preview/05.05.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch05/06-TexturedQuad.html">5.6-TexturedQuad.html</a></td>
                 <td data-i18n="ch0506"></td>
-                <td><img src="overview/05.06.png" /></td>
+                <td><img data-src="preview/05.06.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch05/07-TexturedQuad_Repeat.html">5.7-TexturedQuad_Repeat.html</a></td>
                 <td data-i18n="ch0507"></td>
-                <td><img src="overview/05.07.png" /></td>
+                <td><img data-src="preview/05.07.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch05/08-TexturedQuad_Clamp_Mirror.html">5.8-TexturedQuad_Clamp_Mirror.html</a></td>
                 <td data-i18n="ch0508"></td>
-                <td><img src="overview/05.08.png" /></td>
+                <td><img data-src="preview/05.08.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch05/09-MultiTexture.html">5.9-MultiTexture.html</a></td>
                 <td data-i18n="ch0509"></td>
-                <td><img src="overview/05.09.png" /></td>
+                <td><img data-src="preview/05.09.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/01-LookAtTriangles.html">7.1-LookAtTriangles.html</a></td>
                 <td data-i18n="ch0701"></td>
-                <td><img src="overview/07.01.png" /></td>
+                <td><img data-src="preview/07.01.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/02-LookAtRotatedTriangles.html">7.2-LookAtRotatedTriangles.html</a></td>
                 <td data-i18n="ch0702"></td>
-                <td><img src="overview/07.02.png" /></td>
+                <td><img data-src="preview/07.02.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/03-LookAtRotatedTriangles_mvMatrix.html">7.3-LookAtRotatedTriangles_mvMatrix.html</a></td>
                 <td data-i18n="ch0703"></td>
-                <td><img src="overview/07.03.png" /></td>
+                <td><img data-src="preview/07.03.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/04-LookAtTrianglesWithKeys.html">7.4-LookAtTrianglesWithKeys.html</a></td>
                 <td data-i18n="ch0704"></td>
-                <td><img src="overview/07.04.png" /></td>
+                <td><img data-src="preview/07.04.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/05-OrthoView.html">7.5-OrthoView.html</a></td>
                 <td data-i18n="ch0705"></td>
-                <td><img src="overview/07.05.png" /></td>
+                <td><img data-src="preview/07.05.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/06-LookAtTrianglesWithKeys_ViewVolume.html">7.6-LookAtTrianglesWithKeys_ViewVolume.html</a></td>
                 <td data-i18n="ch0706"></td>
-                <td><img src="overview/07.06.png" /></td>
+                <td><img data-src="preview/07.06.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/07-OrthoView_halfSize.html">7.7-OrthoView_halfSize.html</a></td>
                 <td data-i18n="ch0707"></td>
-                <td><img src="overview/07.07.png" /></td>
+                <td><img data-src="preview/07.07.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/08-OrthoView_halfWidth.html">7.8-OrthoView_halfWidth.html</a></td>
                 <td data-i18n="ch0708"></td>
-                <td><img src="overview/07.08.png" /></td>
+                <td><img data-src="preview/07.08.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/09-PerspectiveView.html">7.9-PerspectiveView.html</a></td>
                 <td data-i18n="ch0709"></td>
-                <td><img src="overview/07.09.png" /></td>
+                <td><img data-src="preview/07.09.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/10-PerspectiveView_mvp.html">7.10-PerspectiveView_mvp.html</a></td>
                 <td data-i18n="ch0710"></td>
-                <td><img src="overview/07.10.png" /></td>
+                <td><img data-src="preview/07.10.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/11-PerspectiveView_mvpMatrix.html">7.11-PerspectiveView_mvpMatrix.html</a></td>
                 <td data-i18n="ch0711"></td>
-                <td><img src="overview/07.11.png" /></td>
+                <td><img data-src="preview/07.11.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/12-DepthBuffer.html">7.12-DepthBuffer.html</a></td>
                 <td data-i18n="ch0712"></td>
-                <td><img src="overview/07.12.png" /></td>
+                <td><img data-src="preview/07.12.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/13-Zfighting.html">7.13-Zfighting.html</a></td>
                 <td data-i18n="ch0713"></td>
-                <td><img src="overview/07.13.png" /></td>
+                <td><img data-src="preview/07.13.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/14-HelloCube.html">7.14-HelloCube.html</a></td>
                 <td data-i18n="ch0714"></td>
-                <td><img src="overview/07.14.png" /></td>
+                <td><img data-src="preview/07.14.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/15-ColoredCube.html">7.15-ColoredCube.html</a></td>
                 <td data-i18n="ch0715"></td>
-                <td><img src="overview/07.15.png" /></td>
+                <td><img data-src="preview/07.15.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/16-ColoredCube_singleColor.html">7.16-ColoredCube_singleColor.html</a></td>
                 <td data-i18n="ch0716"></td>
-                <td><img src="overview/07.16.png" /></td>
+                <td><img data-src="preview/07.16.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch07/17-HelloCube_singleColor.html">7.17-HelloCube_singleColor.html</a></td>
                 <td data-i18n="ch0717"></td>
-                <td><img src="overview/07.17.png" /></td>
+                <td><img data-src="preview/07.17.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch08/01-LightedCube.html">8.1-LightedCube.html</a></td>
                 <td data-i18n="ch0801"></td>
-                <td><img src="overview/08.01.png" /></td>
+                <td><img data-src="preview/08.01.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch08/02-LightedCube_animation.html">8.2-LightedCube_animation.html</a></td>
                 <td data-i18n="ch0802"></td>
-                <td><img src="overview/08.02.png" /></td>
+                <td><img data-src="preview/08.02.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch08/03-LightedCube_ambient.html">8.3-LightedCube_ambient.html</a></td>
                 <td data-i18n="ch0803"></td>
-                <td><img src="overview/08.03.png" /></td>
+                <td><img data-src="preview/08.03.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch08/04-LightedTranslatedRotatedCube.html">8.4-LightedTranslatedRotatedCube.html</a></td>
                 <td data-i18n="ch0804"></td>
-                <td><img src="overview/08.04.png" /></td>
+                <td><img data-src="preview/08.04.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch08/05-PointLightedCube.html">8.5-PointLightedCube.html</a></td>
                 <td data-i18n="ch0805"></td>
-                <td><img src="overview/08.05.png" /></td>
+                <td><img data-src="preview/08.05.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch08/06-PointLightedCube_animation.html">8.6-PointLightedCube_animation.html</a></td>
                 <td data-i18n="ch0806"></td>
-                <td><img src="overview/08.06.png" /></td>
+                <td><img data-src="preview/08.06.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch08/07-PointLightedSphere.html">8.7-PointLightedSphere.html</a></td>
                 <td data-i18n="ch0807"></td>
-                <td><img src="overview/08.07.png" /></td>
+                <td><img data-src="preview/08.07.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch08/08-PointLightedSphere_perFragment.html">8.8-PointLightedSphere_perFragment.html</a></td>
                 <td data-i18n="ch0808"></td>
-                <td><img src="overview/08.08.png" /></td>
+                <td><img data-src="preview/08.08.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch08/09-PointLightedCube_perFragment.html">8.9-PointLightedCube_perFragment.html</a></td>
                 <td data-i18n="ch0809"></td>
-                <td><img src="overview/08.09.png" /></td>
+                <td><img data-src="preview/08.09.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch08/10-LightedCube_perFragment.html">8.10-LightedCube_perFragment.html</a></td>
                 <td data-i18n="ch0810"></td>
-                <td><img src="overview/08.10.png" /></td>
+                <td><img data-src="preview/08.10.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch09/01-JointModel.html">9.1-JointModel.html</a></td>
                 <td data-i18n="ch0901"></td>
-                <td><img src="overview/09.01.png" /></td>
+                <td><img data-src="preview/09.01.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch09/02-MultiJointModel.html">9.2-MultiJointModel.html</a></td>
                 <td data-i18n="ch0902"></td>
-                <td><img src="overview/09.02.png" /></td>
+                <td><img data-src="preview/09.02.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch09/03-MultiJointModel_segment.html">9.3-MultiJointModel_segment.html</a></td>
                 <td data-i18n="ch0903"></td>
-                <td><img src="overview/09.03.png" /></td>
+                <td><img data-src="preview/09.03.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/01-RotateObject.html">10.1-RotateObject.html</a></td>
                 <td data-i18n="ch1001"></td>
-                <td><img src="overview/10.01.png" /></td>
+                <td><img data-src="preview/10.01.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/02-PickObject.html">10.2-PickObject.html</a></td>
                 <td data-i18n="ch1002"></td>
-                <td><img src="overview/10.02.png" /></td>
+                <td><img data-src="preview/10.02.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/03-PickFace.html">10.3-PickFace.html</a></td>
                 <td data-i18n="ch1003"></td>
-                <td><img src="overview/10.03.png" /></td>
+                <td><img data-src="preview/10.03.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/04-HUD.html">10.4-HUD.html</a></td>
                 <td data-i18n="ch1004"></td>
-                <td><img src="overview/10.04.png" /></td>
+                <td><img data-src="preview/10.04.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/05-3DoverWeb.html">10.5-3DoverWeb.html</a></td>
                 <td data-i18n="ch1005"></td>
-                <td><img src="overview/10.05.png" /></td>
+                <td><img data-src="preview/10.05.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/06-Fog.html">10.6-Fog.html</a></td>
                 <td data-i18n="ch1006"></td>
-                <td><img src="overview/10.06.png" /></td>
+                <td><img data-src="preview/10.06.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/07-Fog_w.html">10.7-Fog_w.html</a></td>
                 <td data-i18n="ch1007"></td>
-                <td><img src="overview/10.07.png" /></td>
+                <td><img data-src="preview/10.07.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/08-RoundedPoints.html">10.8-RoundedPoints.html</a></td>
                 <td data-i18n="ch1008"></td>
-                <td><img src="overview/10.08.png" /></td>
+                <td><img data-src="preview/10.08.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/09-LookAtBlendedTriangles.html">10.9-LookAtBlendedTriangles.html</a></td>
                 <td data-i18n="ch1009"></td>
-                <td><img src="overview/10.09.png" /></td>
+                <td><img data-src="preview/10.09.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/10-BlendedCube.html">10.10-BlendedCube.html</a></td>
                 <td data-i18n="ch1010"></td>
-                <td><img src="overview/10.10.png" /></td>
+                <td><img data-src="preview/10.10.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/11-ProgramObject.html">10.11-ProgramObject.html</a></td>
                 <td data-i18n="ch1011"></td>
-                <td><img src="overview/10.11.png" /></td>
+                <td><img data-src="preview/10.11.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/12-FramebufferObject.html">10.12-FramebufferObject.html</a></td>
                 <td data-i18n="ch1012"></td>
-                <td><img src="overview/10.12.png" /></td>
+                <td><img data-src="preview/10.12.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/13-Shadow.html">10.13-Shadow.html</a></td>
                 <td data-i18n="ch1013"></td>
-                <td><img src="overview/10.13.png" /></td>
+                <td><img data-src="preview/10.13.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/14-Shadow_highp.html">10.14-Shadow_highp.html</a></td>
                 <td data-i18n="ch1014"></td>
-                <td><img src="overview/10.14.png" /></td>
+                <td><img data-src="preview/10.14.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/15-OBJViewer.html">10.15-OBJViewer.html</a></td>
                 <td data-i18n="ch1015"></td>
-                <td><img src="overview/10.15.png" /></td>
+                <td><img data-src="preview/10.15.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/16-RotatingTriangle_contextLost.html">10.16-RotatingTriangle_contextLost.html</a></td>
                 <td data-i18n="ch1016"></td>
-                <td><img src="overview/10.16.png" /></td>
+                <td><img data-src="preview/10.16.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/17-Picking.html">10.17-Picking.html</a></td>
                 <td data-i18n="ch1017"></td>
-                <td><img src="overview/10.17.png" /></td>
+                <td><img data-src="preview/10.17.png" /></td>
             </tr>
             <tr>
                 <td><a href="ch10/18-Shadow_highp_sphere.html">10.18-Shadow_highp_sphere.html</a></td>
                 <td data-i18n="ch1018"></td>
-                <td><img src="overview/10.18.png" /></td>
+                <td><img data-src="preview/10.18.png" /></td>
             </tr>
             <tr>
                 <td><a href="gifts/01-Particle.html">G.1-Particle.html</a></td>
                 <td data-i18n="g01"></td>
-                <td><img src="overview/g01.png" /></td>
+                <td><img data-src="preview/g01.png" /></td>
             </tr>
             <tr>
                 <td><a href="gifts/02-Printf.html">G.2-Printf.html</a></td>
                 <td data-i18n="g02"></td>
-                <td><img src="overview/g02.png" /></td>
+                <td><img data-src="preview/g02.png" /></td>
             </tr>
             <tr>
                 <td><a href="gifts/03-TextTexture.html">G.3-TextTexture.html</a></td>
                 <td data-i18n="g03"></td>
-                <td><img src="overview/g03.png" /></td>
+                <td><img data-src="preview/g03.png" /></td>
             </tr>
             <tr>
                 <td><a href="gifts/04-SpecularCube.html">G.4-SpecularCube.html</a></td>
                 <td data-i18n="g04"></td>
-                <td><img src="overview/g04.png" /></td>
+                <td><img data-src="preview/g04.png" /></td>
             </tr>
             <tr>
                 <td><a href="gifts/05-Wave.html">G.5-Wave.html</a></td>
                 <td data-i18n="g05"></td>
-                <td><img src="overview/g05.png" /></td>
+                <td><img data-src="preview/g05.png" /></td>
             </tr>
             <tr>
                 <td><a href="gifts/06-WorldCoordinate.html">G.6-WorldCoordinate.html</a></td>
                 <td data-i18n="g06"></td>
-                <td><img src="overview/g06.png" /></td>
+                <td><img data-src="preview/g06.png" /></td>
             </tr>
             <tr>
                 <td><a href="gifts/07-ThreeDUI.html">G.7-ThreeDUI.html</a></td>
                 <td data-i18n="g07"></td>
-                <td><img src="overview/g07.png" /></td>
+                <td><img data-src="preview/g07.png" /></td>
             </tr>
         </tbody>
     </table>
@@ -508,7 +534,7 @@ const i18n = {
         indexInfo: '我只是制作了该索引页，并使用中文改进内容，你可以从这里获取源码：',
         link: '链接',
         description: '描述',
-        overview: '预览',
+        preview: '预览',
         ch0201: '获取canvas元素，并使用设置的清除色清除canvas',
         ch0202: '在着色器中指定位置来绘制点',
         ch0203: '通过attribute变量传递位置到着色器来绘制点',
@@ -596,6 +622,7 @@ const i18n = {
         g05: '',
         g06: '',
         g07: '',
+        showImages: '显示预览图',
     },
     en: {
         title: 'WebGL Examples',
@@ -603,11 +630,11 @@ const i18n = {
         indexInfo: 'I just created this index page and improved the content in Chinese, you can get the source code from:',
         link: 'Link',
         description: 'Description',
-        overview: 'Overview',
+        preview: 'Preview',
         ch0201: 'test canvas can be used and clear it with the specified color',
         ch0202: 'draw a point by specifying the position in shader',
         ch0203: 'draw a point by pass the position to the shader by using the attribute variable',
-        ch0204: 'draw click points with read color',
+        ch0204: 'draw click points with red color by specifying the color in shader',
         ch0205: 'draw click points with different colors, by passing the uniform variable to the shader',
         ch0206: 'draw a blue rectangle',
         ch0301: '',
@@ -691,6 +718,7 @@ const i18n = {
         g05: '',
         g06: '',
         g07: '',
+        showImages: 'Show Previews',
     }
 };
 
@@ -705,12 +733,36 @@ function changeLanguage(lang) {
     });
 }
 
-// 初始化语言
+// 修改切换图片显示/隐藏的函数
+function toggleImages() {
+    const isVisible = document.getElementById('toggleImages').checked;
+    const images = document.querySelectorAll('table img');
+
+    images.forEach(img => {
+        if (isVisible) {
+            // 如果选择显示且图片还没加载过
+            if (!img.src && img.dataset.src) {
+                img.src = img.dataset.src;
+            }
+            img.style.display = 'block';
+        } else {
+            img.style.display = 'none';
+        }
+    });
+}
+
+// 修改初始化函数
 document.addEventListener('DOMContentLoaded', () => {
     const userLang = navigator.language || navigator.userLanguage;
     const initialLang = userLang.startsWith('zh') ? 'zh' : 'en';
     document.getElementById('languageSelect').value = initialLang;
     changeLanguage(initialLang);
+
+    // 确保图片初始状态是隐藏的
+    const images = document.querySelectorAll('table img');
+    images.forEach(img => {
+        img.style.display = 'none';
+    });
 });
 </script>
 

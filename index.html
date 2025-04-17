@@ -742,7 +742,10 @@ function toggleImages() {
         if (isVisible) {
             // 如果选择显示且图片还没加载过
             if (!img.src && img.dataset.src) {
-                img.src = img.dataset.src;
+                // img.src = img.dataset.src;
+                // 将 .png 替换为 .webp
+                const webpSrc = img.dataset.src.replace(/\.png$/, '.webp');
+                img.src = webpSrc;
             }
             img.style.display = 'block';
         } else {

@@ -10,6 +10,15 @@
     Please use a browser that supports "canvas"
     </canvas>
 
+
+    <p>
+      For each clip space vertex output by the vertex shader draw a triangle from the last 3 vertices. In other words If you output 6 points A,B,C,D,E,F then 4 triangles will be drawn. A,B,C then B,C,D then C,D,E then D,E,F <a href="https://webglfundamentals.org/webgl/lessons/webgl-points-lines-triangles.html">Read more</a>
+    </p>
+    <p>
+      传入 6 个顶点，A,B,C,D,E,F，会绘制 4 个三角形。ABC，BCD，CDE，DEF。<a href="https://webglfundamentals.org/webgl/lessons/webgl-points-lines-triangles.html">阅读更多</a>
+    </p>
+    <img src="https://webglfundamentals.org/webgl/lessons/resources/gl-triangle-strip.svg" width="200" height="200"/>
+
     <script src="../lib/webgl-utils.js"></script>
     <script src="../lib/webgl-debug.js"></script>
     <script src="../lib/cuon-utils.js"></script>

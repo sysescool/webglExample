@@ -10,6 +10,117 @@
     Please use a browser that supports "canvas"
     </canvas>
 
+
+    <h1>
+      attribute 和 uniform 的区别
+    </h1>
+    <h2>
+      1. 作用域和生命周期
+    </h2>
+    <p>
+      <ul>
+        <li>attribute</li>
+        <ul>
+          <li>仅存在于 顶点着色器（Vertex Shader）中</li>
+          <li>用于传递 逐顶点数据（如顶点位置、法线、纹理坐标等）</li>
+          <li>每个顶点都有独立的 attribute 值</li>
+          <li>在绘制调用期间动态变化（每个顶点不同）</li>
+        </ul>
+      </ul>
+      <ul>
+        <li>uniform</li>
+        <ul>
+          <li>存在于 顶点着色器 和 片段着色器（Fragment Shader）中</li>
+          <li>用于传递 全局常量数据（如变换矩阵、光照参数、颜色等）</li>
+          <li>在整个绘制调用中保持不变（所有顶点/片元共享同一值）</li>
+        </ul>
+      </ul>
+    </p>
+    <h2>
+      2. 数据更新频率
+    </h2>
+    <ul>
+      <li>attribute</li>
+      <ul>
+        <code> // 顶点着色器示例 </code><br>
+        <code> attribute vec3 aPosition;  // 每个顶点不同的位置 </code><br>
+        <code> attribute vec2 aTexCoord;  // 每个顶点不同的纹理坐标 </code><br>
+      </ul>
+    </ul>
+    <ul>
+      <li>uniform</li>
+      <ul>
+        <code> // 顶点/片段着色器示例 </code><br>
+        <code> uniform mat4 uModelViewProjectionMatrix;  // 全局的 MVP 矩阵 </code><br>
+        <code> uniform vec3 uLightColor;                 // 全局的光照颜色 </code><br>
+      </ul>
+    </ul>
+    <h2>
+      3. 应用场景
+    </h2>
+    <ul>
+      <li>attribute</li>
+      <ul>
+        <li>顶点位置、法线、颜色、纹理坐标等逐顶点属性</li>
+        <li>通过 glVertexAttribPointer 绑定到顶点缓冲区（VBO）</li>
+      </ul>
+    </ul>
+    <ul>
+      <li>uniform</li>
+      <ul>
+        <li>变换矩阵（Model、View、Projection）</li>
+        <li>光照参数（光源位置、颜色）</li>
+        <li>材质属性（漫反射颜色、高光强度）</li>
+        <li>通过 glUniform* 系列函数设置值</li>
+      </ul>
+    </ul>
+    <h2>
+      4. 现代 GLSL 的变化
+    </h2>
+    <ul>
+      <li>在 OpenGL 3.3+/GLSL 330+ 和 WebGL 2.0 中：</li>
+      <ul>
+        <li>attribute 被重命名为 in（顶点着色器输入）</li>
+        <li>varying 被拆分为 out（顶点着色器输出）和 in（片段着色器输入）</li>
+        <li>uniform 的用法保持不变</li>
+      </ul>
+    </ul>
+    <h2> 5.总结</h2>
+    <table border="1" style="border-collapse: collapse;">
+      <tr>
+        <th>特性</th>
+        <th>attribute</th>
+        <th>uniform</th>
+      </tr>
+      <tr>
+        <td>作用域</td>
+        <td>顶点着色器</td>
+        <td>所有着色器</td>
+      </tr>
+      <tr>
+        <td>数据粒度</td>
+        <td>逐顶点</td>
+        <td>全局一致</td>
+      </tr>
+      <tr>
+        <td>更新频率</td>
+        <td>每顶点变化</td>
+        <td>每绘制调用不变</td>
+      </tr>
+      <tr>
+        <td>典型用途</td>
+        <td>顶点属性</td>
+        <td>全局参数</td>
+      </tr>
+      <tr>
+        <td>设置方式</td>
+        <td>glVertexAttrib*</td>
+        <td>glUniform*</td>
+      </tr>
+    </table>
+    <p>
+      实际使用时，attribute 处理顶点级数据，uniform 处理全局配置，二者共同完成 GPU 的并行计算。
+    </p>
     <script src="../lib/webgl-utils.js"></script>
     <script src="../lib/webgl-debug.js"></script>
     <script src="../lib/cuon-utils.js"></script>

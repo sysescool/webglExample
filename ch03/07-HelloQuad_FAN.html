@@ -14,5 +14,14 @@
     <script src="../lib/webgl-debug.js"></script>
     <script src="../lib/cuon-utils.js"></script>
     <script src="HelloQuad_FAN.js"></script>
+
+    <p>
+      For each clip space vertex output by the vertex shader draw a triangle from the first vertex and the last 2 vertices. In other words if you output 6 points A,B,C,D,E,F then 4 triangles will be drawn. A,B,C then A,C,D then A,D,E and finally A,E,F <a href="https://webglfundamentals.org/webgl/lessons/webgl-points-lines-triangles.html">Read more</a>
+    </p>
+    <p>
+      如果传入 6 个顶点，A,B,C,D,E,F，会绘制 4 个三角形。ABC，ACD，ADE，AEF。<a href="https://webglfundamentals.org/webgl/lessons/webgl-points-lines-triangles.html">阅读更多</a>
+    </p>
+    <img src="https://webglfundamentals.org/webgl/lessons/resources/gl-triangle-fan.svg" width="200" height="200"/>
+
   </body>
 </html>

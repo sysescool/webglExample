@@ -10,6 +10,17 @@
     Please use a browser that supports "canvas"
     </canvas>
 
+<p>
+  For each clip space vertex output by the vertex shader draw a line from the previous point output by the vertex shader.
+</p>
+<p>
+  So, if you output clip space vertices A,B,C,D,E,F you'll get 5 lines. <a href="https://webglfundamentals.org/webgl/lessons/webgl-points-lines-triangles.html">Read more</a>
+</p>
+<p>
+  每两个顶点之间画一条线，点会被复用，我们传入3个点，那么会画出2条线，分别是 AB 和 BC。如果传入 ABCDEF 六个点，那么会画出5条线，分别是 AB，BC，CD，DE，EF。<a href="https://webglfundamentals.org/webgl/lessons/webgl-points-lines-triangles.html">阅读更多</a>
+</p>
+
+<img src="https://webglfundamentals.org/webgl/lessons/resources/gl-line-strip.svg" width="200" height="200"/>
     <script src="../lib/webgl-utils.js"></script>
     <script src="../lib/webgl-debug.js"></script>
     <script src="../lib/cuon-utils.js"></script>

@@ -10,6 +10,14 @@
     Please use a browser that supports "canvas"
     </canvas>
 
+    <p>
+      For each 2 clip space vertices output by the vertex shader draw a line connecting the 2 points. If we had points A,B,C,D,E,F then we'd get 3 lines. <a href="https://webglfundamentals.org/webgl/lessons/webgl-points-lines-triangles.html">Read more</a>
+    </p>
+    <p>
+      屏幕上只画出一条线，是因为 LINES 模式下，每两个顶点之间只画一条线，点不会被复用，而我们传入了3个点，所以只画出一条线，比如有 A,B,C,D,E,F 六个顶点，那么只画出 AB，CD，EF 两条线。<a href="https://webglfundamentals.org/webgl/lessons/webgl-points-lines-triangles.html">阅读更多</a>
+    </p>
+    <img src="https://webglfundamentals.org/webgl/lessons/resources/gl-lines.svg" width="200" height="200"/>
+
     <script src="../lib/webgl-utils.js"></script>
     <script src="../lib/webgl-debug.js"></script>
     <script src="../lib/cuon-utils.js"></script>

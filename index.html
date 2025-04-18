@@ -172,6 +172,21 @@
                 <td><img data-src="preview/03.08.png" /></td>
             </tr>
             <tr>
+                <td><a href="ch03/09-RotatedTriangle.html">3.9-RotatedTriangle.html</a></td>
+                <td data-i18n="ch0309"></td>
+                <td><img data-src="preview/03.09.png" /></td>
+            </tr>
+            <tr>
+                <td><a href="ch03/10-RotatedTriangle_Matrix.html">3.10-RotatedTriangle_Matrix.html</a></td>
+                <td data-i18n="ch0310"></td>
+                <td><img data-src="preview/03.10.png" /></td>
+            </tr>
+            <tr>
+                <td><a href="ch03/11-ScaledTriangle_Matrix.html">3.11-ScaledTriangle_Matrix.html</a></td>
+                <td data-i18n="ch0311"></td>
+                <td><img data-src="preview/03.11.png" /></td>
+            </tr>
+            <tr>
                 <td><a href="ch04/01-RotatedTriangle_Matrix4.html">4.1-RotatedTriangle_Matrix4.html</a></td>
                 <td data-i18n="ch0401"></td>
                 <td><img data-src="preview/04.01.png" /></td>
@@ -539,19 +554,19 @@ const i18n = {
         ch0202: '在着色器中指定位置来绘制点',
         ch0203: '通过attribute变量传递位置到着色器来绘制点',
         ch0204: '绘制点击的点为红色',
-        ch0205: '绘制点击的点为不同颜色，通过传递uniform变量来设置颜色',
+        ch0205: '绘制点击的点为不同颜色，通过传递uniform变量来设置颜色，并解释 attribute 和 uniform 的区别',
         ch0206: '绘制一个蓝色矩形，通过fillStyle和fillRect来绘制',
-        ch0301: '',
-        ch0302: '',
-        ch0303: '',
-        ch0304: '',
-        ch0305: '',
-        ch0306: '',
-        ch0307: '',
-        ch0308: '',
-        ch0309: '',
-        ch0310: '',
-        ch0311: '',
+        ch0301: '绘制多个点，通过将缓冲区对象分配给attribute变量来绘制',
+        ch0302: '在 TRIANGLES 模式下，通过指定顶点位置来绘制一个红色三角形',
+        ch0303: '在 LINE 模式下，传入三个顶点，绘制一条红线',
+        ch0304: '在 LINE_STRIP 模式下，传入三个顶点，绘制两条红线',
+        ch0305: '在 LINE_LOOP 模式下，传入三个顶点，绘制三条红线',
+        ch0306: '在 TRIANGLE_STRIP 模式下，传入四个顶点，绘制一个红色四边形',
+        ch0307: '在 TRIANGLE_FAN 模式下，绘制一个奇怪的图形',
+        ch0308: '通过将平移向量传递给顶点着色器中的uniform变量并加上顶点坐标来平移三角形',
+        ch0309: '绕z轴逆时针旋转90度，通过将cos和sin值传递给顶点着色器中的uniform变量来旋转三角形',
+        ch0310: '通过将旋转矩阵传递给顶点着色器中的uniform变量来旋转三角形',
+        ch0311: '通过将缩放矩阵传递给顶点着色器中的uniform变量来缩放三角形',
         ch0401: '',
         ch0402: '',
         ch0403: '',
@@ -637,17 +652,17 @@ const i18n = {
         ch0204: 'draw click points with red color by specifying the color in shader',
         ch0205: 'draw click points with different colors, by passing the uniform variable to the shader',
         ch0206: 'draw a blue rectangle',
-        ch0301: '',
-        ch0302: '',
-        ch0303: '',
-        ch0304: '',
-        ch0305: '',
-        ch0306: '',
-        ch0307: '',
-        ch0308: '',
-        ch0309: '',
-        ch0310: '',
-        ch0311: '',
+        ch0301: 'draw multiple points, by assigning the buffer object to the attribute variable',
+        ch0302: 'draw a red triangle by specifying the positions of the vertices in TRIANGLES mode.',
+        ch0303: 'draw one line though pass 3 vertices because of the LINE mode',
+        ch0304: 'draw two lines though pass 3 vertices because of the LINE_STRIP mode',
+        ch0305: 'pass 3 vertices and draw three lines because of the LINE_LOOP mode',
+        ch0306: 'draw a red quad by specifying the positions of 4 vertices in TRIANGLE_STRIP mode.',
+        ch0307: 'draw a wired shape because of the TRIANGLE_FAN mode',
+        ch0308: 'pass a translate vector to the uniform variable in the vertex shader and add the vertex coordinates to translate the triangle',
+        ch0309: 'rotate the triangle 90 degrees counterclockwise around the z-axis by passing the cos and sin values to the uniform variable in the vertex shader',
+        ch0310: 'pass a rotate matrix to the uniform variable in the vertex shader to rotate the triangle',
+        ch0311: 'pass a scale matrix to the uniform variable in the vertex shader to scale the triangle',
         ch0401: '',
         ch0402: '',
         ch0403: '',

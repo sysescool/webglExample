@@ -73,10 +73,6 @@
         <option value="zh">中文</option>
         <option value="en">English</option>
     </select>
-    <div class="image-toggle">
-        <input type="checkbox" id="toggleImages" onchange="toggleImages()">
-        <label for="toggleImages" data-i18n="showImages">显示预览图</label>
-    </div>
 </div>
 
 <div>
@@ -97,7 +93,12 @@
             <tr>
                 <th data-i18n="link">link</th>
                 <th data-i18n="description">description</th>
-                <th data-i18n="preview">preview</th>
+                <th>    
+                    <div class="image-toggle">
+                    <input type="checkbox" id="toggleImages" onchange="toggleImages()">
+                    <span data-i18n="preview">preview</span>
+                    </div>
+                </th>
             </tr>
         </thead>
         <tbody>

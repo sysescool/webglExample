@@ -188,6 +188,11 @@
                 <td><img data-src="preview/03.11.png" /></td>
             </tr>
             <tr>
+                <td><a href="lib/unittest/test_cuon-matrix.html">UnitTest-cuon-matrix.html</a></td>
+                <td data-i18n="test_cuon_matrix"></td>
+                <td><img data-src="preview/unittest/test_cuon-matrix.png" /></td>
+            </tr>
+            <tr>
                 <td><a href="ch04/01-RotatedTriangle_Matrix4.html">4.1-RotatedTriangle_Matrix4.html</a></td>
                 <td data-i18n="ch0401"></td>
                 <td><img data-src="preview/04.01.png" /></td>
@@ -568,12 +573,13 @@ const i18n = {
         ch0309: '绕z轴逆时针旋转90度，通过将cos和sin值传递给顶点着色器中的uniform变量来旋转三角形',
         ch0310: '通过将旋转矩阵传递给顶点着色器中的uniform变量来旋转三角形',
         ch0311: '通过将缩放矩阵传递给顶点着色器中的uniform变量来缩放三角形',
-        ch0401: '',
-        ch0402: '',
-        ch0403: '',
-        ch0404: '',
-        ch0405: '',
-        ch0406: '',
+        test_cuon_matrix: '单元测试 lib/cuon-matrix.js',
+        ch0401: '使用 lib/cuon-matrix.js 的 Matrix4 对象来旋转三角形',
+        ch0402: '使用 lib/cuon-matrix.js 的 Matrix4 对象来先旋转再平移三角形',
+        ch0403: '通过更新旋转矩阵的角度值，使三角形旋转',
+        ch0404: '先平移，再旋转，三角形绕原点的偏移点做圆周运动',
+        ch0405: '先平移，再旋转，三角形绕原点的偏移点做圆周运动，可通过两个按钮调整旋转速度',
+        ch0406: '先逆时针旋转60度，再平移0.5，绘制三角形',
         ch0501: '',
         ch0502: '',
         ch0503: '',
@@ -664,12 +670,13 @@ const i18n = {
         ch0309: 'rotate the triangle 90 degrees counterclockwise around the z-axis by passing the cos and sin values to the uniform variable in the vertex shader',
         ch0310: 'pass a rotate matrix to the uniform variable in the vertex shader to rotate the triangle',
         ch0311: 'pass a scale matrix to the uniform variable in the vertex shader to scale the triangle',
-        ch0401: '',
-        ch0402: '',
-        ch0403: '',
-        ch0404: '',
-        ch0405: '',
-        ch0406: '',
+        test_cuon_matrix: 'unit test for lib/cuon-matrix.js',
+        ch0401: 'use Matrix4 object from lib/cuon-matrix.js to rotate the triangle',
+        ch0402: 'use Matrix4 object from lib/cuon-matrix.js to rotate then translate the triangle',
+        ch0403: 'update the angle value of the rotation matrix to rotate the triangle',
+        ch0404: 'translate then rotate, the triangle rotates around the offset point of the origin',
+        ch0405: 'translate then rotate, the triangle rotates around the offset point of the origin, and the rotation speed can be adjusted by two buttons',
+        ch0406: 'rotate 60 degrees counterclockwise, then translate 0.5, draw the triangle',
         ch0501: '',
         ch0502: '',
         ch0503: '',

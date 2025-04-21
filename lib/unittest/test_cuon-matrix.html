@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>cuon-matrix.js 单元测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #333;
+        }
+        #testResults {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+        .success {
+            color: green;
+        }
+        .failure {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>cuon-matrix.js 单元测试</h1>
+    <p>此页面运行 cuon-matrix.js 的单元测试，测试结果将显示在下方。</p>
+    <div id="testResults">测试结果将在这里显示...</div>
+
+    <!-- 引入 cuon-matrix.js -->
+    <script src="../cuon-matrix.js"></script>
+    <!-- 引入测试文件 -->
+    <script src="test_cuon-matrix.js"></script>
+    <script>
+        // 重定向控制台输出到页面
+        (function() {
+            var oldConsoleLog = console.log;
+            var testResults = document.getElementById('testResults');
+            
+            console.log = function() {
+                // 调用原始的 console.log
+                oldConsoleLog.apply(console, arguments);
+                
+                // 将输出添加到页面
+                var args = Array.prototype.slice.call(arguments);
+                var message = args.join(' ');
+                
+                // 检查是否包含"通过"或"失败"
+                if (message.indexOf("通过") !== -1) {
+                    message = message.replace("通过", "<span class='success'>通过</span>");
+                } else if (message.indexOf("失败") !== -1) {
+                    message = message.replace("失败", "<span class='failure'>失败</span>");
+                }
+                
+                testResults.innerHTML += message + '<br>';
+            };
+        })();
+    </script>
+</body>
+</html>

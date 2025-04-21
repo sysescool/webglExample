@@ -78,7 +78,7 @@ function main() {
 
 function initVertexBuffers(gl) {
   var vertices = new Float32Array ([
-    0, 0.5,   -0.5, -0.5,   0.5, -0.5
+    0, 0.6,   0.0, 0.0,   0.3, 0.0
   ]);
   var n = 3;   // The number of vertices
                // 顶点数量

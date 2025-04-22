@@ -1,5 +1,6 @@
 // TexturedQuad_Clamp_Mirror.js (c) 2012 matsuda
 // Vertex shader program
+// 顶点着色器
 var VSHADER_SOURCE =
   'attribute vec4 a_Position;\n' +
   'attribute vec2 a_TexCoord;\n' +
@@ -10,10 +11,12 @@ var VSHADER_SOURCE =
   '}\n';
 
 // Fragment shader program
+// 片元着色器
 var FSHADER_SOURCE =
-  '#ifdef GL_ES\n' +
+  // https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_best_practices#avoid_ifdef_gl_es
+  // '#ifdef GL_ES\n' +
   'precision mediump float;\n' +
-  '#endif\n' +
+  // '#endif\n' +
   'uniform sampler2D u_Sampler;\n' +
   'varying vec2 v_TexCoord;\n' +
   'void main() {\n' +
@@ -22,9 +25,11 @@ var FSHADER_SOURCE =
 
 function main() {
   // Retrieve <canvas> element
+  // 获取 <canvas> 元素
   var canvas = document.getElementById('webgl');
 
   // Get the rendering context for WebGL
+  // 获取 WebGL 的渲染上下文
   var gl = getWebGLContext(canvas);
   if (!gl) {
     console.log('Failed to get the rendering context for WebGL');
@@ -32,12 +37,14 @@ function main() {
   }
 
   // Initialize shaders
+  // 初始化着色器
   if (!initShaders(gl, VSHADER_SOURCE, FSHADER_SOURCE)) {
     console.log('Failed to intialize shaders.');
     return;
   }
 
   // Set the vertex information
+  // 设置顶点信息
   var n = initVertexBuffers(gl);
   if (n < 0) {
     console.log('Failed to set the vertex information');
@@ -45,9 +52,11 @@ function main() {
   }
 
   // Specify the color for clearing <canvas>
+  // 设置清除 <canvas> 的颜色
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
   // Set texture
+  // 设置纹理
   if (!initTextures(gl, n)) {
     console.log('Failed to intialize the texture.');
     return;
@@ -57,14 +66,16 @@ function main() {
 function initVertexBuffers(gl) {
   var verticesTexCoords = new Float32Array([
     // Vertex coordinate, Texture coordinate
+    // 顶点坐标, 纹理坐标
     -0.5,  0.5,   -0.3,  1.7,
     -0.5, -0.5,   -0.3, -0.2,
      0.5,  0.5,    1.7,  1.7,
      0.5, -0.5,    1.7, -0.2
   ]);
   var n = 4; // The number of vertices
-
+             // 顶点数量
   // Create a buffer object
+  // 创建缓冲区对象
   var vertexTexCoordBuffer = gl.createBuffer();
   if (!vertexTexCoordBuffer) {
     console.log('Failed to create the buffer object');
@@ -72,6 +83,7 @@ function initVertexBuffers(gl) {
   }
 
   // Write the positions of vertices to a vertex shader
+  // 将顶点坐标写入顶点着色器
   gl.bindBuffer(gl.ARRAY_BUFFER, vertexTexCoordBuffer);
   gl.bufferData(gl.ARRAY_BUFFER, verticesTexCoords, gl.STATIC_DRAW);
 
@@ -85,17 +97,21 @@ function initVertexBuffers(gl) {
   gl.enableVertexAttribArray(a_Position);
 
   // Get the storage location of a_TexCoord
+  // 获取 a_TexCoord 的存储位置
   var a_TexCoord = gl.getAttribLocation(gl.program, 'a_TexCoord');
   if (a_TexCoord < 0) {
     console.log('Failed to get the storage location of a_TexCoord');
     return -1;
   }
   // Assign the buffer object to a_TexCoord variable
+  // 将缓冲区对象分配给 a_TexCoord 变量
   gl.vertexAttribPointer(a_TexCoord, 2, gl.FLOAT, false, FSIZE * 4, FSIZE * 2);
   // Enable the generic vertex attribute array
+  // 启用通用顶点属性数组
   gl.enableVertexAttribArray(a_TexCoord);
 
   // Unbind the buffer object
+  // 解绑缓冲区对象
   gl.bindBuffer(gl.ARRAY_BUFFER, null);
 
   return n;
@@ -103,6 +119,7 @@ function initVertexBuffers(gl) {
 
 function initTextures(gl, n) {
   // Create a texture object
+  // 创建一个纹理对象
   var texture = gl.createTexture();
   if (!texture) {
     console.log('Failed to create the texture object');
@@ -110,6 +127,7 @@ function initTextures(gl, n) {
   }
 
   // Get the storage location of u_Sampler
+  // 获取 u_Sampler 的存储位置
   var u_Sampler = gl.getUniformLocation(gl.program, 'u_Sampler');
   if (!u_Sampler) {
     console.log('Failed to get the storage location of u_Sampler');
@@ -117,10 +135,13 @@ function initTextures(gl, n) {
   }
 
   // Create the image object
+  // 创建一个图像对象
   var image = new Image();
   // Register the event handler to be called when image loading is completed
+  // 注册一个事件处理程序，当图像加载完成时调用
   image.onload = function(){ loadTexture(gl, n, texture, u_Sampler, image); };
   // Tell the browser to load an Image
+  // 告诉浏览器加载一个图像
   image.src = '../resources/sky.jpg';
 
   return true;
@@ -128,22 +149,37 @@ function initTextures(gl, n) {
 
 function loadTexture(gl, n, texture, u_Sampler, image) {
   gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1);  // Flip the image Y coordinate
+                                              // 翻转图像的 Y 坐标
   // Activate texture unit0
+  // 启用纹理单元0
   gl.activeTexture(gl.TEXTURE0);
   // Bind the texture object to the target
+  // 将纹理对象绑定到目标
   gl.bindTexture(gl.TEXTURE_2D, texture);
 
   // Set the texture parameter
+  // 设置纹理参数
+  // Set the texture minification filter to linear, bilinear interpolation, so it looks smoother, but may blur details.
+  // 设置纹理缩小过滤方式为线性过滤，即双线性插值，这样看起来更平滑，但可能模糊细节。
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  // Set the texture wrap parameter
+  // 设置纹理包装参数
+  // T is vertical, set the texture wrap parameter to mirror repeat
+  // T 轴是垂直的，设置 T 轴的包装方式为镜像重复
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.MIRRORED_REPEAT);
+  // S is horizontal, set the texture wrap parameter to clamp to edge
+  // S 轴是水平的，设置 S 轴的包装方式为边缘重复
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
   // Set the image to texture
+  // 将图像设置为纹理
   gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
   
   // Set the texture unit 0 to the sampler
+  // 告诉着色器中 u_Sampler 使用纹理单元 0
   gl.uniform1i(u_Sampler, 0);
   
   gl.clear(gl.COLOR_BUFFER_BIT);  // Clear <canvas>
-
+                                  // 清除 <canvas>
   gl.drawArrays(gl.TRIANGLE_STRIP, 0, n);  // Draw the rectangle
+                                           // 绘制矩形
 }

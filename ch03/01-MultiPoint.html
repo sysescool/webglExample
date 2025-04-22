@@ -14,5 +14,189 @@
     <script src="../lib/webgl-debug.js"></script>
     <script src="../lib/cuon-utils.js"></script>
     <script src="MultiPoint.js"></script>
+
+    <h1>
+      STATIC_DRAW DYNAMIC_DRAW STREAM_DRAW 作用与区别
+    </h1>
+    <h2>
+      一、核心区别
+    </h2>
+    <table border="1" style="border-collapse: collapse;">
+      <tr>
+        <td>标志</td>
+        <td>数据更新频率</td>
+        <td>数据访问模式</td>
+        <td>典型内存位置</td>
+        <td>适用场景</td>
+      </tr>
+      <tr>
+        <td>STATIC_DRAW</td>
+        <td>一次写入，极少修改</td>
+        <td>频繁读取，长期使用</td>
+        <td>高性能静态内存区</td>
+        <td>静态模型、地形、UI 静态元素</td>
+      </tr>
+      <tr>
+        <td>DYNAMIC_DRAW</td>
+        <td>中等频率修改</td>
+        <td>多次读取，多次写入</td>
+        <td>可重写内存区</td>
+        <td>动态 UI、角色动画、可编辑网格</td>
+      </tr>
+      <tr>
+        <td>STREAM_DRAW</td>
+        <td>每帧/高频修改</td>
+        <td>写入后立即使用</td>
+        <td>流式内存区</td>
+        <td>粒子系统、实时生成几何体、GPU 计算</td>
+      </tr>
+    </table>
+    <h2>
+      二、详细解析
+    </h2>
+    <h3>
+      1. STATIC_DRAW
+    </h3>
+      
+    <ul>
+      <li>行为特点：</li>
+      <ul>
+        <li>数据上传后几乎不会修改</li>
+        <li>WebGL 会将数据放置在最适合快速读取的内存区域</li>
+        <li>修改数据时性能开销较大（需重新分配内存）</li>
+      </ul>
+    </ul>
+    <ul>
+      <li>代码示例：</li>
+      <ul>
+        <code>// 静态地形顶点数据 </code><br>
+        <code>const staticVertices = new Float32Array([...]);</code><br>
+        <code>gl.bufferData(gl.ARRAY_BUFFER, staticVertices, gl.STATIC_DRAW);</code><br>
+      </ul>
+    </ul>
+    <h3>
+      2. DYNAMIC_DRAW
+    </h3>
+    <ul>
+      <li>行为特点：</li>
+      <ul>
+        <li>数据会被多次修改，但修改频率低于每帧</li>
+        <li>WebGL 会优先选择可高效重写的内存区域</li>
+        <li>支持 bufferSubData 部分更新</li>
+      </ul>
+    </ul>
+    <ul>
+      <li>代码示例：</li>
+      <ul>
+        <code>// 动态 UI 元素位置数据 </code><br>
+        <code>const dynamicUI = new Float32Array([...]);</code><br>
+        <code>gl.bufferData(gl.ARRAY_BUFFER, dynamicUI, gl.DYNAMIC_DRAW);</code><br>
+        <code>// 后续更新（例如响应窗口大小变化）</code><br>
+        <code>function updateUI() {</code><br>
+        <code>  dynamicUI.set(newPositions);</code><br>
+        <code>  gl.bufferSubData(gl.ARRAY_BUFFER, 0, dynamicUI);</code><br>
+        <code>}</code><br>
+      </ul>
+    </ul>
+    <h3>
+      3. STREAM_DRAW
+    </h3>
+    <ul>
+      <li>行为特点：</li>
+      <ul>
+        <li>数据每帧都会完全更新</li>
+        <li>WebGL 会使用可快速写入但读取效率较低的内存</li>
+        <li>通常与 bufferData 全量更新配合使用（而非 bufferSubData）</li>
+      </ul>
+    </ul>
+    <ul>
+      <li>代码示例：</li>
+      <ul>
+        <code>// 粒子系统位置数据（每帧更新）</code><br>
+        <code>let particlePositions = new Float32Array(MAX_PARTICLES * 3);</code><br>
+        <code>gl.bufferData(gl.ARRAY_BUFFER, particlePositions, gl.STREAM_DRAW);</code><br>
+        <code>function animate() {</code><br>
+        <code>  // 每帧生成新数据</code><br>
+        <code>  generateNewParticlePositions(particlePositions);</code><br>
+        <code>  gl.bufferData(gl.ARRAY_BUFFER, particlePositions, gl.STREAM_DRAW);</code><br>
+        <code>  gl.drawArrays(gl.POINTS, 0, MAX_PARTICLES);</code><br>
+        <code>  requestAnimationFrame(animate);</code><br>
+        <code>}</code><br>
+      </ul>
+    </ul>
+    <h2>
+      三、性能优化原则
+    </h2>
+    <ul>
+      <li>
+        1. 不要滥用 DYNAMIC/STREAM，对静态数据滥用 DYNAMIC/STREAM 会浪费优化机会
+      </li>
+      <li>
+        2. 更新策略匹配标志
+        <table border="1" style="border-collapse: collapse;">
+          <tr>
+            <td>标志</td>
+            <td>推荐更新方法</td>
+            <td>避免的操作</td>
+          </tr>
+          <tr>
+            <td>STATIC_DRAW</td>
+            <td>初始化时一次性 bufferData</td>
+            <td>后续任何更新操作</td>
+          </tr>
+          <tr>
+            <td>DYNAMIC_DRAW</td>
+            <td>使用 bufferSubData 部分更新</td>
+            <td>频繁全量 bufferData</td>
+          </tr>
+          <tr>
+            <td>STREAM_DRAW</td>
+            <td>每帧全量 bufferData</td>
+            <td>多次 bufferSubData 调用</td>
+          </tr>
+        </table>
+      </li>
+      <li>
+        3. 内存管理注意事项: STREAM_DRAW 缓冲区的大小变化会导致内存重新分配：
+        <ul>
+          <code>// 错误：频繁改变数据大小</code><br>
+          <code>const varyingSizeData = new Float32Array(frameCount % 100);</code><br>
+          <code>gl.bufferData(gl.ARRAY_BUFFER, varyingSizeData, gl.STREAM_DRAW);</code><br>
+        </ul>
+      </li>
+    </ul>
+    <h2>
+      四、底层实现差异（以现代 GPU 为例）
+    </h2>
+    <table border="1" style="border-collapse: collapse;">
+      <tr>
+        <td>标志</td>
+        <td>内存类型</td>
+        <td>典型访问延迟</td>
+        <td>写入带宽</td>
+        <td>读取带宽</td>
+      </tr>
+      <tr>
+        <td>STATIC_DRAW</td>
+        <td>VRAM 静态区</td>
+        <td>低 (~100ns)</td>
+        <td>低</td>
+        <td>高</td>
+      </tr>
+      <tr>
+        <td>DYNAMIC_DRAW</td>
+        <td>VRAM 可映射区</td>
+        <td>中 (~300ns)</td>
+        <td>中</td>
+        <td>中</td>
+      </tr>
+      <tr>
+        <td>STREAM_DRAW</td>
+        <td>系统内存 → 直接上传路径</td>
+        <td>高 (~1μs)</td>
+        <td>高</td>
+        <td>低</td>
+      </tr>
+    </table>
   </body>
 </html>

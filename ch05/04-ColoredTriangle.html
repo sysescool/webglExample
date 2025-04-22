@@ -15,5 +15,139 @@
     <script src="../lib/cuon-utils.js"></script>
     <script src="../lib/cuon-matrix.js"></script>
     <script src="ColoredTriangle.js"></script>
+    <p>
+      uniform 和 attribute 的区别见:<a href="/ch02/05-ColoredPoints.html">ch02/05-ColoredPoints.html</a>
+    </p>
+    <h1>
+      uniform、attribute 和 varying
+    </h1>
+    <p>在 WebGL/GLSL 中，<code>uniform</code>、<code>attribute</code> 和 <code>varying</code> 是三种关键变量类型，它们的区别如下：</p>
+    <hr>
+    <h3 id="-1-attribute-"><strong>1. attribute（属性变量）</strong></h3>
+    <ul>
+    <li><strong>作用</strong>：传递 <strong>顶点级别</strong> 的数据（每个顶点独有的数据）。</li>
+    <li><strong>使用场景</strong>：顶点着色器中，用于接收每个顶点的属性（如位置、颜色、纹理坐标等）。</li>
+    <li><strong>特点</strong>：<ul>
+    <li>只能在 <strong>顶点着色器</strong> 中声明和使用。</li>
+    <li>每个顶点都有独立的属性值。</li>
+    </ul>
+    </li>
+    <li>
+      <strong>WebGL 设置方式</strong>:
+      <pre><code class="lang-javascript">
+      const positionLocation = gl.getAttribLocation(program, 'a_position');
+      gl.vertexAttribPointer(positionLocation, 3, gl.FLOAT, false, 0, 0);
+      </code></pre>
+    </li>
+    </ul>
+    <hr>
+    <h3 id="-2-uniform-"><strong>2. uniform（统一变量）</strong></h3>
+    <ul>
+    <li><strong>作用</strong>：传递 <strong>全局常量</strong>（所有顶点/片元共享同一份数据）。</li>
+    <li><strong>使用场景</strong>：在顶点和片元着色器中均可使用，用于传递全局数据（如变换矩阵、时间、光源位置等）。</li>
+    <li><strong>特点</strong>：<ul>
+    <li>值在一次绘制调用中 <strong>不可变</strong>。</li>
+    <li>所有顶点和片元共享同一个值。</li>
+    </ul>
+    </li>
+    <li>
+      <strong>WebGL 设置方式</strong>：
+      <pre><code class="lang-javascript">
+      const matrixLocation = gl.getUniformLocation(program, 'u_matrix');
+      gl.uniformMatrix4fv(matrixLocation, false, matrix);
+      </code></pre>
+    </li>
+    </ul>
+    <hr>
+    <h3 id="-3-varying-"><strong>3. varying（可变量）</strong></h3>
+    <ul>
+    <li><strong>作用</strong>：在 <strong>顶点着色器 → 片元着色器</strong> 之间传递插值后的数据。</li>
+    <li><strong>使用场景</strong>：顶点着色器输出数据，片元着色器接收插值后的结果（如颜色、纹理坐标插值）。</li>
+    <li><strong>特点</strong>：<ul>
+    <li>在顶点着色器中声明为 <code>out</code>，在片元着色器中声明为 <code>in</code>（GLSL ES 3.0+）。</li>
+    <li>数据会基于片元位置自动插值（如平滑渐变）。</li>
+    </ul>
+    </li>
+    <li>
+      <p><strong>示例</strong>：</p>
+      <pre><code class="lang-glsl">
+      // 顶点着色器
+      out vec3 v_color; // 输出到片元着色器
+      void main() {
+        v_color = vec3(1.0, 0.0, 0.0); // 顶点颜色
+      }
+    
+      // 片元着色器
+      in vec3 v_color; // 接收插值后的颜色
+      void main() {
+        gl_FragColor = vec4(v_color, 1.0);
+      }
+      </code></pre>
+    </li>
+    </ul>
+    <hr>
+    <h3 id="-"><strong>关键区别总结</strong></h3>
+    <table border="1" style="border-collapse: collapse;">
+    <thead>
+    <tr>
+    <th>类型</th>
+    <th>作用域</th>
+    <th>数据变化频率</th>
+    <th>典型用途</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+    <td><code>attribute</code></td>
+    <td>顶点着色器</td>
+    <td>每个顶点不同</td>
+    <td>顶点位置、颜色、UV坐标</td>
+    </tr>
+    <tr>
+    <td><code>uniform</code></td>
+    <td>全局</td>
+    <td>一次绘制调用中不变</td>
+    <td>变换矩阵、时间、全局光照参数</td>
+    </tr>
+    <tr>
+    <td><code>varying</code></td>
+    <td>顶点→片元</td>
+    <td>插值后的值</td>
+    <td>颜色渐变、纹理坐标插值</td>
+    </tr>
+    </tbody>
+    </table>
+    <hr>
+    <h3 id="-"><strong>代码示例</strong></h3>
+    <pre><code class="lang-html">
+    &lt;!-- 顶点着色器 --&gt;
+    &lt;script id="vertexShader" type="x-shader/x-vertex"&gt;
+      attribute vec3 a_position;    // 顶点位置（attribute）
+      uniform mat4 u_matrix;        // 变换矩阵（uniform）
+      out vec3 v_color;             // 传递给片元的颜色（varying）
+    
+      void main() {
+        gl_Position = u_matrix * vec4(a_position, 1.0);
+        v_color = a_position * 0.5 + 0.5; // 生成颜色
+      }
+    &lt;/script&gt;
+    
+    &lt;!-- 片元着色器 --&gt;
+    &lt;script id="fragmentShader" type="x-shader/x-fragment"&gt;
+      precision mediump float;
+      in vec3 v_color;              // 接收插值后的颜色（varying）
+    
+      void main() {
+        gl_FragColor = vec4(v_color, 1.0);
+      }
+    &lt;/script&gt;
+    </code></pre>
+    <hr>
+    <h3 id="-"><strong>注意事项</strong></h3>
+    <ul>
+    <li>在 GLSL ES 3.0+ 中，<code>attribute</code> 改为 <code>in</code>，<code>varying</code> 被拆分为 <code>out</code>（顶点着色器）和 <code>in</code>（片元着色器）。</li>
+    <li><code>uniform</code> 在顶点和片元着色器中需分别声明，且类型必须一致。</li>
+    </ul>
+    </p>
   </body>
 </html>

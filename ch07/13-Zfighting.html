@@ -9,7 +9,12 @@
     <canvas id="webgl" width="400" height="400">
     Please use a browser that supports "canvas"
     </canvas>
-
+    <p>
+      多边形偏移（Polygon Offset）用来解决当两个物体深度值一样时，斑斑驳驳或闪烁的问题。
+    </p>
+    <p>
+      其原理是自动在 Z 值上加一个偏移量，偏移量的值由物体表面相对于观察者视线的角度来确定。
+    </p>
     <script src="../lib/webgl-utils.js"></script>
     <script src="../lib/webgl-debug.js"></script>
     <script src="../lib/cuon-utils.js"></script>

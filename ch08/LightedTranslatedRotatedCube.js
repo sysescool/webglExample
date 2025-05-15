@@ -1,30 +1,41 @@
 // LightedTranslatedRotatedCube.js (c) 2012 matsuda
 // Vertex shader program
+// 顶点着色器
 var VSHADER_SOURCE =
   'attribute vec4 a_Position;\n' +
   'attribute vec4 a_Color;\n' +
   'attribute vec4 a_Normal;\n' +
   'uniform mat4 u_MvpMatrix;\n' +
   'uniform mat4 u_NormalMatrix;\n' +   // Transformation matrix of the normal
+                                       // 法向量矩阵
   'uniform vec3 u_LightColor;\n' +     // Light color
+                                       // 光源颜色
   'uniform vec3 u_LightDirection;\n' + // Light direction (in the world coordinate, normalized)
+                                       // 光源方向（在世界坐标系中，归一化）
   'uniform vec3 u_AmbientLight;\n' +   // Ambient light color
+                                       // 环境光颜色
   'varying vec4 v_Color;\n' +
   'void main() {\n' +
   '  gl_Position = u_MvpMatrix * a_Position;\n' +
      // Recalculate the normal based on the model matrix and make its length 1.
+     // 根据模型矩阵重新计算法向量，并将其长度归一化
   '  vec3 normal = normalize(vec3(u_NormalMatrix * a_Normal));\n' +
      // Calculate the dot product of the light direction and the orientation of a surface (the normal)
+     // 计算光照方向和法向量的点积（表面方向）
   '  float nDotL = max(dot(u_LightDirection, normal), 0.0);\n' +
      // Calculate the color due to diffuse reflection
+     // 计算漫反射颜色
   '  vec3 diffuse = u_LightColor * a_Color.rgb * nDotL;\n' +
      // Calculate the color due to ambient reflection
+     // 计算环境光颜色
   '  vec3 ambient = u_AmbientLight * a_Color.rgb;\n' +
      // Add the surface colors due to diffuse reflection and ambient reflection
+     // 将漫反射颜色和环境光颜色相加
   '  v_Color = vec4(diffuse + ambient, a_Color.a);\n' + 
   '}\n';
 
 // Fragment shader program
+// 片元着色器
 var FSHADER_SOURCE =
   '#ifdef GL_ES\n' +
   'precision mediump float;\n' +
@@ -36,9 +47,11 @@ var FSHADER_SOURCE =
 
 function main() {
   // Retrieve <canvas> element
+  // 获取canvas元素
   var canvas = document.getElementById('webgl');
 
   // Get the rendering context for WebGL
+  // 获取WebGL的渲染上下文
   var gl = getWebGLContext(canvas);
   if (!gl) {
     console.log('Failed to get the rendering context for WebGL');
@@ -46,6 +59,7 @@ function main() {
   }
 
   // Initialize shaders
+  // 初始化着色器
   if (!initShaders(gl, VSHADER_SOURCE, FSHADER_SOURCE)) {
     console.log('Failed to intialize shaders.');
     return;
@@ -59,10 +73,12 @@ function main() {
   }
 
   // Set the clear color and enable the depth test
+  // 设置清除颜色并启用深度测试
   gl.clearColor(0, 0, 0, 1);
   gl.enable(gl.DEPTH_TEST);
 
   // Get the storage locations of uniform variables
+  // 获取uniform变量的存储位置
   var u_MvpMatrix = gl.getUniformLocation(gl.program, 'u_MvpMatrix');
   var u_NormalMatrix = gl.getUniformLocation(gl.program, 'u_NormalMatrix');
   var u_LightColor = gl.getUniformLocation(gl.program, 'u_LightColor');
@@ -74,43 +90,57 @@ function main() {
   }
 
   // Set the light color (white)
+  // 设置光源颜色（白色）
   gl.uniform3f(u_LightColor, 1.0, 1.0, 1.0);
   // Set the light direction (in the world coordinate)
+  // 设置光源方向（在世界坐标系中）
   var lightDirection = new Vector3([0.0, 3.0, 4.0]);
-  lightDirection.normalize();     // Normalize
+  lightDirection.normalize();     // Normalize 归一化
   gl.uniform3fv(u_LightDirection, lightDirection.elements);
   // Set the ambient light
+  // 设置环境光
   gl.uniform3f(u_AmbientLight, 0.2, 0.2, 0.2);
 
-  var modelMatrix = new Matrix4();  // Model matrix
+  var modelMatrix = new Matrix4();  // Model matrix // 模型矩阵
   var mvpMatrix = new Matrix4();    // Model view projection matrix
+                                    // 模型视图投影矩阵
   var normalMatrix = new Matrix4(); // Transformation matrix for normals
+                                    // 法向量矩阵
 
   // Calculate the model matrix
+  // 计算模型矩阵
   modelMatrix.setTranslate(0, 0.9, 0); // Translate to the y-axis direction
+                                       // 沿y轴方向平移
   modelMatrix.rotate(90, 0, 0, 1);     // Rotate 90 degree around the z-axis
+                                       // 绕z轴旋转90度
   // Calculate the view projection matrix
+  // 计算视图投影矩阵
   mvpMatrix.setPerspective(30, canvas.width/canvas.height, 1, 100);
   mvpMatrix.lookAt(3, 3, 7, 0, 0, 0, 0, 1, 0);
   mvpMatrix.multiply(modelMatrix);
   // Pass the model view projection matrix to u_MvpMatrix
+  // 将模型视图投影矩阵传递给u_MvpMatrix
   gl.uniformMatrix4fv(u_MvpMatrix, false, mvpMatrix.elements);
 
   // Calculate the matrix to transform the normal based on the model matrix
+  // 计算法向量矩阵
   normalMatrix.setInverseOf(modelMatrix);
   normalMatrix.transpose();
   // Pass the transformation matrix for normals to u_NormalMatrix
+  // 将法向量矩阵传递给u_NormalMatrix
   gl.uniformMatrix4fv(u_NormalMatrix, false, normalMatrix.elements);
 
   // Clear color and depth buffer
+  // 清除颜色和深度缓冲区
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
   // Draw the cube
+  // 绘制立方体
   gl.drawElements(gl.TRIANGLES, n, gl.UNSIGNED_BYTE, 0);
 }
 
 function initVertexBuffers(gl) {
-  // Create a cube
+  // Create a cube // 创建一个立方体
   //    v6----- v5
   //   /|      /|
   //  v1------v0|
@@ -159,14 +189,17 @@ function initVertexBuffers(gl) {
  ]);
 
   // Write the vertex property to buffers (coordinates, colors and normals)
+  // 将顶点属性写入缓冲区（坐标，颜色和法向量）
   if (!initArrayBuffer(gl, 'a_Position', vertices, 3)) return -1;
   if (!initArrayBuffer(gl, 'a_Color', colors, 3)) return -1;
   if (!initArrayBuffer(gl, 'a_Normal', normals, 3)) return -1;
 
   // Unbind the buffer object
+  // 解绑缓冲区对象
   gl.bindBuffer(gl.ARRAY_BUFFER, null);
 
   // Write the indices to the buffer object
+  // 将索引写入缓冲区对象
   var indexBuffer = gl.createBuffer();
   if (!indexBuffer) {
     console.log('Failed to create the buffer object');
@@ -180,15 +213,18 @@ function initVertexBuffers(gl) {
 
 function initArrayBuffer(gl, attribute, data, num) {
   // Create a buffer object
+  // 创建一个缓冲区对象
   var buffer = gl.createBuffer();
   if (!buffer) {
     console.log('Failed to create the buffer object');
     return false;
   }
   // Write date into the buffer object
+  // 将数据写入缓冲区对象
   gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
   gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
   // Assign the buffer object to the attribute variable
+  // 将缓冲区对象分配给属性变量
   var a_attribute = gl.getAttribLocation(gl.program, attribute);
   if (a_attribute < 0) {
     console.log('Failed to get the storage location of ' + attribute);
@@ -196,6 +232,7 @@ function initArrayBuffer(gl, attribute, data, num) {
   }
   gl.vertexAttribPointer(a_attribute, num, gl.FLOAT, false, 0, 0);
   // Enable the assignment of the buffer object to the attribute variable
+  // 启用缓冲区对象的分配
   gl.enableVertexAttribArray(a_attribute);
 
   return true;

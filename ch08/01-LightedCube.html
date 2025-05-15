@@ -10,6 +10,24 @@
     Please use a browser that supports "canvas"
     </canvas>
 
+    <p>
+      漫反射是指光线打在物体表面上，向各个方向均匀反射的现象。比如光线打在你的手背上，在各个角度看你的手背都是差不多的颜色。
+      <pre><code>
+        <漫反射颜色> = <入射光颜色> * <物体表面颜色> * (<光线方向> · <法线方向>)
+      </code></pre>
+      注意，光线方向和法线方向需要是归一化的，即向量长度为1。因为这里需要的是 cos(入射角) 的值。
+    </p>
+    <p>
+      入射角指：光线方向和平面法线方向的夹角。
+      <pre><code>
+        cos(入射角) = <光线方向向量> · <法线方向向量> / (<光线方向向量> 的长度 * <法线方向向量> 的长度)
+      </code></pre>
+      由于两个向量都是归一化的，所以公式可以简化为：
+      <pre><code>
+        cos(入射角) = <光线方向向量> · <法线方向向量>
+      </code></pre>
+    </p>                   
+
     <script src="../lib/webgl-utils.js"></script>
     <script src="../lib/webgl-debug.js"></script>
     <script src="../lib/cuon-utils.js"></script>

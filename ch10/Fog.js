@@ -1,42 +1,50 @@
 // Fog.js (c) 2012 matsuda and ohnishi
 // Vertex shader program
+// 顶点着色器
 var VSHADER_SOURCE =
   'attribute vec4 a_Position;\n' +
   'attribute vec4 a_Color;\n' +
   'uniform mat4 u_MvpMatrix;\n' +
   'uniform mat4 u_ModelMatrix;\n' +
   'uniform vec4 u_Eye;\n' +     // Position of eye point (world coordinates)
+                                // 眼睛位置（世界坐标）
   'varying vec4 v_Color;\n' +
   'varying float v_Dist;\n' +
   'void main() {\n' +
   '  gl_Position = u_MvpMatrix * a_Position;\n' +
   '  v_Color = a_Color;\n' +
      // Calculate the distance to each vertex from eye point
+     // 计算每个顶点与眼睛点之间的距离
   '  v_Dist = distance(u_ModelMatrix * a_Position, u_Eye);\n' +
   '}\n';
 
 // Fragment shader program
+// 片段着色器
 var FSHADER_SOURCE =
   '#ifdef GL_ES\n' +
   'precision mediump float;\n' +
   '#endif\n' +
-  'uniform vec3 u_FogColor;\n' + // Color of Fog
-  'uniform vec2 u_FogDist;\n' +  // Distance of Fog (starting point, end point)
+  'uniform vec3 u_FogColor;\n' + // Color of Fog // 雾的颜色
+  'uniform vec2 u_FogDist;\n' +  // Distance of Fog (starting point, end point) // 雾的距离（起始点，结束点）
   'varying vec4 v_Color;\n' +
   'varying float v_Dist;\n' +
   'void main() {\n' +
      // Calculation of fog factor (factor becomes smaller as it goes further away from eye point)
+     // 计算雾因子（随着距离眼睛点越来越远，因子越来越小）
   '  float fogFactor = clamp((u_FogDist.y - v_Dist) / (u_FogDist.y - u_FogDist.x), 0.0, 1.0);\n' +
      // Stronger fog as it gets further: u_FogColor * (1 - fogFactor) + v_Color * fogFactor
+     // 随着距离眼睛点越来越远，雾的颜色越浓：u_FogColor * (1 - fogFactor) + v_Color * fogFactor
   '  vec3 color = mix(u_FogColor, vec3(v_Color), fogFactor);\n' +
   '  gl_FragColor = vec4(color, v_Color.a);\n' +
   '}\n';
 
 function main() {
   // Retrieve <canvas> element
+  // 获取<canvas>元素
   var canvas = document.getElementById('webgl');
 
   // Get the rendering context for WebGL
+  // 获取WebGL的渲染上下文
   var gl = getWebGLContext(canvas);
   if (!gl) {
     console.log('Failed to get the rendering context for WebGL');
@@ -44,6 +52,7 @@ function main() {
   }
 
   // Initialize shaders
+  // 初始化着色器
   if (!initShaders(gl, VSHADER_SOURCE, FSHADER_SOURCE)) {
     console.log('Failed to intialize shaders.');
     return;
@@ -57,13 +66,17 @@ function main() {
   }
 
   // Color of Fog
+  // 雾的颜色
   var fogColor = new Float32Array([0.137, 0.231, 0.423]);
   // Distance of fog [where fog starts, where fog completely covers object]
+  // 雾的距离（起始点，结束点）
   var fogDist = new Float32Array([55, 80]);
   // Position of eye point (world coordinates)
+  // 眼睛位置（世界坐标）
   var eye = new Float32Array([25, 65, 35, 1.0]);
 
   // Get the storage locations of uniform variables
+  // 获取uniform变量的存储位置
   var u_MvpMatrix = gl.getUniformLocation(gl.program, 'u_MvpMatrix');
   var u_ModelMatrix = gl.getUniformLocation(gl.program, 'u_ModelMatrix');
   var u_Eye = gl.getUniformLocation(gl.program, 'u_Eye');
@@ -75,20 +88,24 @@ function main() {
   }
 	
   // Pass fog color, distances, and eye point to uniform variable
-  gl.uniform3fv(u_FogColor, fogColor); // Colors
-  gl.uniform2fv(u_FogDist, fogDist);   // Starting point and end point
-  gl.uniform4fv(u_Eye, eye);           // Eye point
+  // 将雾的颜色、距离和眼睛位置传递给uniform变量
+  gl.uniform3fv(u_FogColor, fogColor); // Colors // 雾的颜色
+  gl.uniform2fv(u_FogDist, fogDist);   // Starting point and end point // 雾的距离（起始点，结束点）
+  gl.uniform4fv(u_Eye, eye);           // Eye point // 眼睛位置（世界坐标）
 
   // Set clear color and enable hidden surface removal
-  gl.clearColor(fogColor[0], fogColor[1], fogColor[2], 1.0); // Color of Fog
+  // 设置清除颜色并启用隐藏表面消除
+  gl.clearColor(fogColor[0], fogColor[1], fogColor[2], 1.0); // Color of Fog // 雾的颜色
   gl.enable(gl.DEPTH_TEST);
 
   // Pass the model matrix to u_ModelMatrix
+  // 将模型矩阵传递给u_ModelMatrix
   var modelMatrix = new Matrix4();
   modelMatrix.setScale(10, 10, 10);
   gl.uniformMatrix4fv(u_ModelMatrix, false, modelMatrix.elements);
 
   // Pass the model view projection matrix to u_MvpMatrix
+  // 将模型视图投影矩阵传递给u_MvpMatrix
   var mvpMatrix = new Matrix4();
   mvpMatrix.setPerspective(30, canvas.width/canvas.height, 1, 1000);
   mvpMatrix.lookAt(eye[0], eye[1], eye[2], 0, 2, 0, 0, 1, 0);
@@ -97,8 +114,10 @@ function main() {
   document.onkeydown = function(ev){ keydown(ev, gl, n, u_FogDist, fogDist); };
 
   // Clear color and depth buffer
+  // 清除颜色和深度缓冲区
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
   // Draw
+  // 绘制
   gl.drawElements(gl.TRIANGLES, n, gl.UNSIGNED_BYTE, 0);
 
   var modelViewMatrix = new Matrix4();
@@ -113,17 +132,20 @@ function main() {
 function keydown(ev, gl, n, u_FogDist, fogDist) {
   switch (ev.keyCode) {
     case 38: // Up arrow key -> Increase the maximum distance of fog
+             // 上箭头键 -> 增加雾的最大距离
       fogDist[1]  += 1;
       break;
     case 40: // Down arrow key -> Decrease the maximum distance of fog
+             // 下箭头键 -> 减少雾的最大距离
       if (fogDist[1] > fogDist[0]) fogDist[1] -= 1;
       break;
     default: return;
   }
-  gl.uniform2fv(u_FogDist, fogDist);   // Pass the distance of fog
+  gl.uniform2fv(u_FogDist, fogDist);   // Pass the distance of fog // 传递雾的距离
   // Clear color and depth buffer
+  // 清除颜色和深度缓冲区
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-  // Draw
+  // Draw // 绘制
   gl.drawElements(gl.TRIANGLES, n, gl.UNSIGNED_BYTE, 0);
 }
 
@@ -170,10 +192,12 @@ function initVertexBuffers(gl) {
     return -1;
 
   // Write the vertex property to buffers (coordinates and normals)
+  // 将顶点属性写入缓冲区（坐标和法向量）
   if (!initArrayBuffer(gl, vertices, 3, gl.FLOAT, 'a_Position')) return -1;
   if (!initArrayBuffer(gl, colors, 3, gl.FLOAT, 'a_Color')) return -1;
 
   // Write the indices to the buffer object
+  // 将索引写入缓冲区对象
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
   gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW);
 
@@ -182,15 +206,18 @@ function initVertexBuffers(gl) {
 
 function initArrayBuffer (gl, data, num, type, attribute) {
   // Create a buffer object
+  // 创建一个缓冲区对象
   var buffer = gl.createBuffer();
   if (!buffer) {
     console.log('Failed to create the buffer object');
     return false;
   }
   // Write date into the buffer object
+  // 将数据写入缓冲区对象
   gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
   gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
   // Assign the buffer object to the attribute variable
+  // 将缓冲区对象分配给属性变量
   var a_attribute = gl.getAttribLocation(gl.program, attribute);
   if (a_attribute < 0) {
     console.log('Failed to get the storage location of ' + attribute);
@@ -198,8 +225,10 @@ function initArrayBuffer (gl, data, num, type, attribute) {
   }
   gl.vertexAttribPointer(a_attribute, num, type, false, 0, 0);
   // Enable the assignment of the buffer object to the attribute variable
+  // 启用缓冲区对象到属性变量的赋值
   gl.enableVertexAttribArray(a_attribute);
   // Unbind the buffer object
+  // 取消绑定缓冲区对象
   gl.bindBuffer(gl.ARRAY_BUFFER, null);
 
   return true;

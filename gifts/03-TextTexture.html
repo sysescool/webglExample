@@ -6,10 +6,19 @@
   </head>
 
   <body onload="main()">
+    <p>
+      在新建的 canvas 上绘制文字，然后将新建 canvas 上的文字作为纹理绘制到下面的 canvas 上。
+    </p>
     <canvas id="webgl" width="400" height="400">
     Please use a browser that supports "canvas"
     </canvas>
-
+    <br />
+    <p>
+      canvas 本身就可以用来绘制文字，下面是演示：
+    </p>
+    <canvas id="text" width="256" height="256">
+      Please use a browser that supports "canvas".
+    </canvas>
     <script src="../lib/webgl-utils.js"></script>
     <script src="../lib/webgl-debug.js"></script>
     <script src="../lib/cuon-utils.js"></script>

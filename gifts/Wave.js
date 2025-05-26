@@ -1,5 +1,6 @@
 // Wave.js
 // Vertex shader program
+// 顶点着色器
 var VSHADER_SOURCE =
   'uniform mat4 u_perspectiveMatrix;\n' +
   'uniform mat4 u_modelMatrix;\n' +
@@ -23,6 +24,7 @@ var VSHADER_SOURCE =
   '}\n';
 
 // Fragment shader program
+// 片元着色器
 var FSHADER_SOURCE =
   '#ifdef GL_ES\n' +
   'precision mediump float;\n' +
@@ -42,9 +44,11 @@ var g_vertexIndexNum;
 
 function main() {
   // Retrieve <canvas> element
+  // 获取<canvas>元素
   var canvas = document.getElementById('example');
 
   // Get the rendering context for WebGL
+  // 获取 WebGL 的渲染上下文
   var gl = getWebGLContext(canvas);
   if (!gl) {
     console.log('Failed to get the rendering context for WebGL');
@@ -52,6 +56,7 @@ function main() {
   }
 
   // Initialize shaders
+  // 初始化着色器
   if (!initShaders(gl, VSHADER_SOURCE, FSHADER_SOURCE)) {
     console.log('Failed to intialize shaders.');
     return;
@@ -83,10 +88,10 @@ function main() {
 
 
 function drawCommon(gl, canvas, perspectiveMatrixShaderLocation, viewMatrixShaderLocation) {
-  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);    // Clear <canvas>
+  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);    // Clear <canvas> // 清除画布
   g_perspectiveMatrix.setPerspective(30, canvas.width/canvas.height, 1, 10000);
   g_viewMatrix.setLookAt(0, 3, 5,   0, 0, 0,    0, 1, 0);   // eyePos - focusPos - upVector
-
+                                                            // 设置视图矩阵
   gl.uniformMatrix4fv(perspectiveMatrixShaderLocation, false, g_perspectiveMatrix.elements);
   gl.uniformMatrix4fv(viewMatrixShaderLocation, false, g_viewMatrix.elements);
 }

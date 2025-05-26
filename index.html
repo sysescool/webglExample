@@ -637,13 +637,13 @@ const i18n = {
         ch1016: '绘制了旋转的三角形，但代码演示的是上下文的丢失与恢复',
         ch1017: '和10.03节基本一样',
         ch1018: '绘制了旋转的三角形，它的影子落在一个彩色的球上',
-        g01: '',
-        g02: '',
-        g03: '',
-        g04: '',
-        g05: '',
-        g06: '',
-        g07: '',
+        g01: '粒子特效，实现烟花效果',
+        g02: '通过纹理，显示数字',
+        g03: '在 canvas 上绘制文字，然后使用这个文字作为纹理绘制到另一个 canvas 上',
+        g04: '绘制一个旋转的高光反射的立方体',
+        g05: '实现波浪效果',
+        g06: '通过绘制10个随机位置的三角形，演示了世界坐标系的用法',
+        g07: '制作了一个3D的GUI，通过按键进行图片选择',
         showImages: '显示预览图',
     },
     en: {
@@ -734,13 +734,13 @@ const i18n = {
         ch1016: 'Draw the rotating triangle, but the code demonstrates the context lost and recovery',
         ch1017: 'Same as 10.03 basically',
         ch1018: 'Draw the rotating triangle, its shadow falls on a colored sphere',
-        g01: '',
-        g02: '',
-        g03: '',
-        g04: '',
-        g05: '',
-        g06: '',
-        g07: '',
+        g01: 'Particle effect, implement the firework effect',
+        g02: 'Display numbers by using texture',
+        g03: 'Draw text on a canvas, and use the text as a texture on another canvas',
+        g04: 'Draw a rotating specular reflection cube',
+        g05: 'Implement the wave effect',
+        g06: 'Draw 10 triangles with random positions, demonstrate the usage of the world coordinate system',
+        g07: 'Make a 3D GUI, select the image by the key',
         showImages: 'Show Previews',
     }
 };
@@ -789,6 +789,8 @@ document.addEventListener('DOMContentLoaded', () => {
     images.forEach(img => {
         img.style.display = 'none';
     });
+
+    toggleImages();
 });
 </script>
 

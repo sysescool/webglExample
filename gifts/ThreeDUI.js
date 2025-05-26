@@ -1,5 +1,6 @@
 // ThreeDUI.js (c) 2012 matsuda and itami
 // Vertex shader program
+// 顶点着色器
 var VSHADER_COLOR_SOURCE =
   'attribute vec4 a_Position;\n' +
   'attribute vec4 a_Color;\n' +
@@ -11,6 +12,7 @@ var VSHADER_COLOR_SOURCE =
   '}\n';
 
 // Fragment shader program
+// 片元着色器
 var FSHADER_COLOR_SOURCE =
   '#ifdef GL_ES\n' +
   'precision mediump float;\n' +
@@ -21,6 +23,7 @@ var FSHADER_COLOR_SOURCE =
   '}\n';
 
 // Vertex shader program (for texture)
+// 顶点着色器（用于纹理）
 var VSHADER_TEXTURE_SOURCE =
   'attribute vec4 a_Position;\n' +
   'attribute vec2 a_TexCoord;\n' +
@@ -33,6 +36,7 @@ var VSHADER_TEXTURE_SOURCE =
   '}\n';
 
 // Fragment shader program(for texture)
+// 片元着色器（用于纹理）
 var FSHADER_TEXTURE_SOURCE =
   '#ifdef GL_ES\n' +
   'precision mediump float;\n' +
@@ -86,12 +90,14 @@ function pictureItem(line) {
 }
 
 // Get a string (to the separator)
+// 获取字符串（到分隔符）
 function trimTo(target, separator) {
   var idx = target.indexOf(separator);
   return target.substring(idx + 1);
 }
 
 // Get a string (from the separator)
+// 获取字符串（从分隔符）
 function trimFrom(target, separator) {
   var idx = target.lastIndexOf(separator);
   return target.substring(0, idx);
@@ -99,6 +105,7 @@ function trimFrom(target, separator) {
 
 function main() {
   // Retrieve <canvas> element
+  // 获取<canvas>元素
   var canvas = document.getElementById('webgl');
   var hud = document.getElementById('hud');  
 
@@ -108,8 +115,10 @@ function main() {
   } 
 
   // Get the rendering context for WebGL
+  // 获取 WebGL 的渲染上下文
   var gl = getWebGLContext(canvas);
   // Get the rendering context for 2DCG
+  // 获取 2D 的渲染上下文
   var ctx = hud.getContext('2d');
   if (!gl || !ctx) {
     console.log('Failed to get rendering context');
@@ -117,6 +126,7 @@ function main() {
   }
 
   // Create a shader
+  // 创建着色器
   g_program_color = createProgram(gl, VSHADER_COLOR_SOURCE, FSHADER_COLOR_SOURCE);
   if (g_program_color == null ) {
     console.log('Failed to create the shader');
@@ -124,6 +134,7 @@ function main() {
   }
 
   // Create a shader for a texture
+  // 创建用于纹理的着色器
   g_program_texture = createProgram(gl, VSHADER_TEXTURE_SOURCE, FSHADER_TEXTURE_SOURCE);
   if (g_program_texture == null ) {
     console.log('Failed to create the shader');
@@ -131,6 +142,7 @@ function main() {
   }
 
   // Create a buffer object
+  // 创建缓冲区对象
   g_vertexColorBuffer = gl.createBuffer();
   if (!g_vertexColorBuffer) {
     console.log('Failed to create a buffer object');
@@ -143,22 +155,26 @@ function main() {
   }
 
   // Set a view projection matrix
+  // 设置视图投影矩阵
   g_viewProjMatrix.setPerspective(50.0, canvas.width / canvas.height, 1.0, 100.0);
   g_viewProjMatrix.lookAt(0.0, 0.0, 6.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
   // Set a matrix of a picture panel
+  // 设置图片面板的矩阵
   g_panelDefaultMatrix.setTranslate(-0.5, 0.2, 0.0);
   g_panelDefaultMatrix.rotate( 52.0, 0.0, 1.0, 0.0);
   g_panelDefaultMatrix.rotate(-12.0, 1.0, 0.0, 0.0);
   g_panelDefaultMatrix.rotate(15.0, 0.0, 0.0, 1.0); 
   
   // Register the key event handler
+  // 注册键盘事件处理程序
   document.onkeydown = function(ev){ keydown(ev, gl); };
 
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
   gl.enable(gl.DEPTH_TEST);
 
   // Create a picture panel
+  // 创建图片面板
   picturePanel = new PicturePanel(gl, pictureInfos);
   picturePanel.selectedIndex = 0;
 
@@ -228,6 +244,7 @@ function useTextureShader(gl) {
 }
 
 // The vertex information for a picture plate
+// 图片面板的顶点信息
 var selectedVerticesColors = new Float32Array([
   -0.55,  0.55,   0.88, 0.09, 0.09,
   -0.55, -0.55,   0.88, 0.09, 0.09,
@@ -236,6 +253,7 @@ var selectedVerticesColors = new Float32Array([
 ]);
 
 // The vertex information for a picture
+// 图片的顶点信息
 var normalVerticesColors = new Float32Array([
   -0.55,  0.55,   1.0, 1.0, 1.0,
   -0.55, -0.55,   1.0, 1.0, 1.0,
@@ -275,7 +293,7 @@ function onUpdate(gl, ctx) {
   }
 
   gl.clear(gl.COLOR_BUFFER_BIT);
-  ctx.clearRect(0, 0, 400, 400); // Clear <hud>
+  ctx.clearRect(0, 0, 400, 400); // Clear <hud> // 清除 HUD
 
   picturePanel.draw(gl, g_panelDefaultMatrix);
   if (nextPicturePanel != null){
@@ -289,6 +307,7 @@ function onUpdate(gl, ctx) {
     useColorShader(gl);
 
     // Draw a picture plate
+    // 绘制图片面板
     modelMatrix.setTranslate(1.2, 1.2, 2.0);
     mvpMatrix.set(g_viewProjMatrix);
     mvpMatrix.multiply(modelMatrix);
@@ -297,16 +316,19 @@ function onUpdate(gl, ctx) {
     useTextureShader(gl);
 
     // Draw a selected picture
+    // 绘制选中的图片
     modelMatrix.setTranslate(1.2, 1.2, 2.001);
     mvpMatrix.set(g_viewProjMatrix);
     mvpMatrix.multiply(modelMatrix);
     picturePanel.cells[picturePanel.selectedIndex].draw(gl, mvpMatrix, false);
 
     // Draw a text
+    // 绘制文本
     var description = picturePanel.infos[picturePanel.selectedIndex].description;
     var lines = description.split('\n');
     ctx.font = '14px "Times New Roman"';
     ctx.fillStyle = 'rgba(255, 255, 255, 1)'; // Set white to the color of letters
+                                                // 设置白色为文本颜色
     for(var i = 0; i < lines.length; i++)
       ctx.fillText(lines[i], 270, 150 + i * 16); 
   }
@@ -347,19 +369,22 @@ function keydown(ev, gl) {
 
 //------------------------------------------------------------------------------
 // Object for a picture panel
+// 图片面板对象
 var cellX = new Array(-1.2, 0.0, 1.2, -1.2, 0.0, 1.2, -1.2, 0.0, 1.2, -1.2, 0.0, 1.2);
 var cellY = new Array(1.8, 1.8, 1.8, 0.6, 0.6, 0.6, -0.6, -0.6, -0.6, -1.8, -1.8, -1.8);
 
 // The target index 
+// 目标索引
 var upperIndex = new Array(0, 9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8);
 var lowerIndex = new Array(0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2);
 var leftIndex  = new Array(0, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 var rightIndex = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0);
 
 // The number of pictures
+// 图片数量
 var cellsParPanel = 12;
 
-// Constructor
+// Constructor // 构造函数
 var PicturePanel = function(gl, infos) {
   this.mode = 0;
   this.selectedIndex = -1;
@@ -373,13 +398,13 @@ var PicturePanel = function(gl, infos) {
   }
 }
 
-// Mode
-//  0: Normal rendeing
-//  1: Hide animation (Up key)
-//  2: Show animation (Up key)
-//  3: Hide animation (Down key)
-//  4: Show animation (Down key)
-//  5: End animation
+// Mode // 模式
+//  0: Normal rendeing           // 正常渲染
+//  1: Hide animation (Up key)   // 隐藏动画（上箭头）
+//  2: Show animation (Up key)   // 显示动画（上箭头）
+//  3: Hide animation (Down key) // 隐藏动画（下箭头）
+//  4: Show animation (Down key) // 显示动画（下箭头）
+//  5: End animation             // 结束动画
 PicturePanel.prototype.setMode = function(mode) {
   this.mode = mode;
   if (this.mode == 1 || this.mode == 3){
@@ -391,6 +416,7 @@ PicturePanel.prototype.setMode = function(mode) {
 }
 
 // Select the upper panel
+// 选择上方的面板
 PicturePanel.prototype.selectUpper = function() {
   do {
     this.selectedIndex = upperIndex[this.selectedIndex + 1];
@@ -398,6 +424,7 @@ PicturePanel.prototype.selectUpper = function() {
 }
 
 // Select the lower panel
+// 选择下方的面板
 PicturePanel.prototype.selectLower = function() {
   do {
     this.selectedIndex = lowerIndex[this.selectedIndex + 1];
@@ -405,6 +432,7 @@ PicturePanel.prototype.selectLower = function() {
 }
 
 // Select the right panel
+// 选择右边的面板
 PicturePanel.prototype.selectRight = function() {
   do {
     this.selectedIndex = rightIndex[this.selectedIndex + 1];
@@ -412,6 +440,7 @@ PicturePanel.prototype.selectRight = function() {
 }
 
 // Select the left panel
+// 选择左边的面板
 PicturePanel.prototype.selectLeft = function() {
   do {
     this.selectedIndex = leftIndex[this.selectedIndex + 1];
@@ -419,43 +448,44 @@ PicturePanel.prototype.selectLeft = function() {
 }
 
 // Update
+// 更新
 PicturePanel.prototype.update = function(gl, panelDefaultMatrix) {
   var speed = 8.0;
   switch(this.mode){
-    case 1: // Hide animation (Up key)
+    case 1: // Hide animation (Up key) // 隐藏动画（上箭头）
       this.angle -= speed;
       if(this.angle < 0.0)  this.angle += 360.0;	  
       if(this.angle <= 180.0){
         this.angle = 180.0;
-        this.mode = 5;  // End the animation
+        this.mode = 5;  // End the animation // 结束动画
       }
       break;
-    case 2: // Show animation (Up key)
+    case 2: // Show animation (Up key) // 显示动画（上箭头）
       this.angle -= speed;
       if(this.angle <= 0.0){
         this.angle = 0.0;
-        this.mode = 5;  // End animation
+        this.mode = 5;  // End animation // 结束动画
       }
       break;
-    case 3: // Hide animation (Down key)
+    case 3: // Hide animation (Down key) // 隐藏动画（下箭头）
       this.angle += speed;
       if(this.angle >= 180.0){
         this.angle = 180.0;
-        this.mode = 5;  // End animation
+        this.mode = 5;  // End animation // 结束动画
       }
       break;
-    case 4: // Show animation (Down key)
+    case 4: // Show animation (Down key) // 显示动画（下箭头）
       this.angle += speed;
       if(this.angle >= 360.0){
         this.angle = 0.0;
-        this.mode = 5;  // End animation
+        this.mode = 5;  // End animation // 结束动画
       }
       break;
   }
   return(this.mode);
 }
 
-// Rendering
+// Rendering // 渲染
 PicturePanel.prototype.draw = function(gl, panelDefaultMatrix) {
   var panelMatrix = new Matrix4();
   panelMatrix.set(panelDefaultMatrix);
@@ -465,7 +495,7 @@ PicturePanel.prototype.draw = function(gl, panelDefaultMatrix) {
 
   useColorShader(gl);
 
-  // Draw a picture plate
+  // Draw a picture plate // 绘制图片面板
   for (var i = 0; i < cellsParPanel; i++) {
     modelMatrix.set(panelMatrix);
     modelMatrix.translate(cellX[i], cellY[i], 0.001);
@@ -480,7 +510,7 @@ PicturePanel.prototype.draw = function(gl, panelDefaultMatrix) {
 
   useTextureShader(gl);
 
-  // Draw a picture
+  // Draw a picture // 绘制图片
   for (var i = 0; i < this.cells.length; i++){
     modelMatrix.set(panelMatrix);
     modelMatrix.translate(cellX[i], cellY[i], 0.002);
@@ -491,8 +521,8 @@ PicturePanel.prototype.draw = function(gl, panelDefaultMatrix) {
 }
 
 //------------------------------------------------------------------------------
-// Object for drawing a picture
-// Constructor
+// Object for drawing a picture // 绘制图片的对象
+// Constructor // 构造函数
 var PictureCell = function(gl, filePath) {
   this.filePath = filePath;
   this.isTextureLoaded = false;
@@ -504,9 +534,9 @@ var PictureCell = function(gl, filePath) {
      0.5,  0.5,   1.0, 1.0,
      0.5, -0.5,   1.0, 0.0,
   ]);
-  this.n = 4; // The number of vertices
+  this.n = 4; // The number of vertices // 顶点数量
 
-  this.texture = gl.createTexture();   // Create a texture object
+  this.texture = gl.createTexture();   // Create a texture object // 创建纹理对象
   if (!this.texture) {
     console.log('Failed to Create a texture object');
     this.result = false;

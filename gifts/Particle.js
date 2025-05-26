@@ -1,5 +1,6 @@
 // Particle.js (c) 2012 tanaka and matsuda
 // Vertex shader program
+// 顶点着色器
 var VSHADER_SOURCE =
   'uniform mat4 u_perspectiveMatrix;\n' +
   'uniform mat4 u_modelMatrix;\n' +
@@ -20,6 +21,7 @@ var VSHADER_SOURCE =
   '}\n';
 
 // Fragment shader program
+// 片元着色器
 var FSHADER_SOURCE =
   '#ifdef GL_ES\n' +
   'precision mediump float;\n' +
@@ -46,9 +48,11 @@ var IMAGE;
 
 function main() {
   // Retrieve <canvas> element
+  // 获取<canvas>元素
   var canvas = document.getElementById('webgl');
 
   // Get the rendering context for WebGL
+  // 获取WebGL的渲染上下文
   var gl = getWebGLContext(canvas);
   if (!gl) {
     console.log('Failed to get the rendering context for WebGL');
@@ -56,12 +60,14 @@ function main() {
   }
 
   // Initialize shaders
+  // 初始化着色器
   if (!initShaders(gl, VSHADER_SOURCE, FSHADER_SOURCE)) {
     console.log('Failed to intialize shaders.');
     return;
   }
 
   // Set texture
+  // 设置纹理
   if (!initTextures(gl, "../resources/particle.png")) {
     console.log('Failed to set texture');
     return;
@@ -78,6 +84,7 @@ function main() {
   sendQuadVertexBuffers(gl);
 
   // Create particles
+  // 创建粒子
   var particle = new Array(500);
   for (var i = 0; i < particle.length; ++i) {
     particle[i] = new Particle();
@@ -140,6 +147,7 @@ function drawParticle(gl, p, perspectiveMatrixShaderLocation, modelMatrixShaderL
     if (p[i].wait <= 0) {
       g_modelMatrix.setTranslate(p[i].position[0], p[i].position[1], p[i].position[2]);
       // Rotate arounf z-axis to show the front face
+      // 绕z轴旋转以显示正面
       g_modelMatrix.rotate(p[i].angle, 0, 0, 1);
       var scale = 0.5 * p[i].scale;
       g_modelMatrix.scale(scale, scale, scale);
@@ -154,18 +162,22 @@ function drawParticle(gl, p, perspectiveMatrixShaderLocation, modelMatrixShaderL
 function updateParticle(p) {
   for (var i = 0; i < p.length; ++i) {
     // Wait for creation
+    // 等待创建
     if (p[i].wait > 0) {
       p[i].wait--;
       continue;
     }
     // Update a vertex coordinate
+    // 更新顶点坐标
     p[i].position[0] += p[i].velocity[0];
     p[i].position[1] += p[i].velocity[1];
     p[i].position[2] += p[i].velocity[2];
 
     // Decreate Y translation
+    // 减少Y轴的平移
     p[i].velocity[1] -= 0.003;
     // Fading out
+    // 逐渐消失
     p[i].alpha -= 0.05;
 
     if (p[i].alpha <= 0) {
@@ -215,6 +227,7 @@ function Particle(){
 
 function initParticle(p, wait) {
   // Movement speed
+  // 移动速度
   var angle = Math.random() * Math.PI * 2;
   var height = Math.random() * 0.02 + 0.13;
   var speed = Math.random() * 0.01 + 0.02;
@@ -226,15 +239,17 @@ function initParticle(p, wait) {
   p.position[1] = Math.random() * 0.2;
   p.position[2] = Math.random() * 0.2;
 
-  // Rotation angle
+  // Rotation angle 旋转角度
   p.angle = Math.random() * 360;
-  // Size
+  // Size 大小
   p.scale = Math.random() * 0.5 + 0.5;
-  // Transparency
+  // Transparency 透明度
   p.alpha = 5;
   // In initial stage, vary a time for creation
+  // 在初始阶段，随机时间创建
   if (wait == true) {
     // Time to wait
+    // 等待时间
     p.wait = Math.random() * 120;
   }
 }
@@ -243,12 +258,14 @@ function initTextures(gl, str) {
   TEXTURE = gl.createTexture();
   if (!TEXTURE) {
     console.log('テクスチャオブジェクトの作成に失敗');
+    console.log('创建纹理对象失败');
     return false;
   }
 
   IMAGE = new Image();
   if(!IMAGE) {
     console.log('画像オブジェクトの作成に失敗');
+    console.log('创建图像对象失败');
     return false;
   }
 

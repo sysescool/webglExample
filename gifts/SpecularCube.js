@@ -1,5 +1,6 @@
 // Specular.js 2013 (c) matsuda
 // Vertex shader program
+// 顶点着色器
 var VSHADER_SOURCE =
   'uniform mat4 u_perspectiveMatrix;\n' +
   'uniform mat4 u_modelMatrix;\n' +
@@ -19,6 +20,7 @@ var VSHADER_SOURCE =
   '}\n';
 
 // Fragment shader program
+// 片元着色器
 var FSHADER_SOURCE =
   '#ifdef GL_ES\n' +
   'precision mediump float;\n' +
@@ -45,7 +47,7 @@ var FSHADER_SOURCE =
   '  gl_FragColor.a = 1.0;\n' +
   '}\n';
 
-// Gloval variables
+// Gloval variables // 全局变量
 var g_perspectiveMatrix = new Matrix4();
 var g_modelMatrix = new Matrix4();
 var g_viewMatrix = new Matrix4();
@@ -56,9 +58,11 @@ var g_vertexIndexBuffer;
 
 function main() {
   // Retrieve <canvas> element
+  // 获取<canvas>元素
   var canvas = document.getElementById('webgl');
 
   // Get the rendering context for WebGL
+  // 获取 WebGL 的渲染上下文
   var gl = getWebGLContext(canvas);
   if (!gl) {
     console.log('Failed to get the rendering context for WebGL');
@@ -66,6 +70,7 @@ function main() {
   }
 
   // Initialize shaders
+  // 初始化着色器
   if (!initShaders(gl, VSHADER_SOURCE, FSHADER_SOURCE)) {
     console.log('Failed to intialize shaders.');
     return;
@@ -97,7 +102,7 @@ function main() {
 
 function drawCommon(gl, canvas, angle, perspectiveMatrixShaderLocation, viewMatrixShaderLocation, lightPositionShaderLocation, f_viewMatrixShaderLocation) {
 
-  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);    // Clear canvas
+  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);    // Clear canvas // 清除画布
   g_perspectiveMatrix.setPerspective(30, canvas.width/canvas.height, 1, 10000);
   g_viewMatrix.setLookAt(0, 3, 10,   0, 0, 0,    0, 1, 0);   // eyePos - focusPos - upVector
 
